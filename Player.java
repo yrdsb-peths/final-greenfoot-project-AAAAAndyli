@@ -78,6 +78,7 @@ public class Player extends Actor
                 jumpHeight += gravityModifier;
             }
         }
+        isGrounded = isTouching(Platform.class);
         if(hMovement < 0)
         {
             hMovement++;
@@ -120,11 +121,11 @@ public class Player extends Actor
             }
             if(facing == "left")
             {
-                hMovement = -50;
+                hMovement = -25;
             }
             else
             {
-                hMovement = 50;
+                hMovement = 25;
             }
             dashable = 0;
         }
