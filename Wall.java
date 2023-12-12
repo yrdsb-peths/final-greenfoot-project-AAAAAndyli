@@ -19,19 +19,26 @@ public class Wall extends Actor
         GameWorld1 world = (GameWorld1) getWorld();
         if(isTouching(Player.class))
         {
-            if(world.player.getY() < getY()+)
+            if(world.player.getY() < getY()-getImage().getHeight()/2)
             {
                 isPlayerAbove = true;
                 world.player.gravityModifier = 0;
                 world.player.jumpHeight = 0;
                 world.player.isGrounded = true;
                 world.player.peakJump = false;
-                world.player.setLocation(world.player.getX(), world.player.getY()-1);
+                world.player.setLocation(world.player.getX(), getY()-2*getImage().getHeight()/3);
             }
             else if(world.player.getX() < getX())
             {
                 isPlayerAbove = false;
-                world.player.setLocation(world.player.getX(), world.player.getY()+10);
+                world.player.hMovement = -2;
+                world.player.setLocation(world.player.getX()-1, world.player.getY());
+            }
+            else if(world.player.getX() > getX())
+            {
+                isPlayerAbove = false;
+                world.player.hMovement = 2;
+                world.player.setLocation(world.player.getX()+1, world.player.getY());
             }
         }
     

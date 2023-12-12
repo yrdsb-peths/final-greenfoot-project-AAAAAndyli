@@ -18,6 +18,7 @@ public class GameWorld1 extends World
         super(1200, 600, 1); 
         prepare();
     }
+    
     /**
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.
@@ -25,11 +26,23 @@ public class GameWorld1 extends World
     private void prepare()
     {
         Platform platform = new Platform();
-        addObject(platform,145,538);
+        addObject(platform,72,574);
         Platform platform2 = new Platform();
-        addObject(platform2,613,541);
+        addObject(platform2,251,575);
         Platform platform3 = new Platform();
-        addObject(platform3,1047,547);
-        addObject(player,164,373);
+        addObject(platform3,442,575);
+        Platform platform4 = new Platform();
+        addObject(platform4,633,575);
+        Platform platform5 = new Platform();
+        addObject(platform5,824,575);
+        Platform platform6 = new Platform();
+        addObject(platform6,1014,575);
+        Platform platform7 = new Platform();
+        addObject(platform7,1187,575);
+        Wall wall = new Wall();
+        addObject(wall,172,434);
+        Wall wall2 = new Wall();
+        addObject(wall2,1064,437);
+        addObject(player,609,175);
     }
 }

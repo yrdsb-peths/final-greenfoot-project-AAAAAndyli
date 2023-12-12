@@ -26,9 +26,9 @@ public class Platform extends Actor
                 world.player.jumpHeight = 0;
                 world.player.isGrounded = true;
                 world.player.peakJump = false;
-                world.player.setLocation(world.player.getX(), world.player.getY()-1);
+                world.player.setLocation(world.player.getX(), getY()-2*getImage().getHeight()/3);
             }
-            else
+            else if(!world.player.isGrounded)
             {
                 isPlayerAbove = false;
                 world.player.setLocation(world.player.getX(), world.player.getY()+10);
