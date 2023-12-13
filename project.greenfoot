@@ -1,7 +1,7 @@
 #Greenfoot project file
 class.Box.image=newbox.png
 class.Platform.image=floor.png
-class.Player.image=button-red.png
+class.Player.image=newbox.png
 class.Wall.image=wall.png
 dependency1.from=GameWorld1
 dependency1.to=Player

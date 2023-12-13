@@ -25,12 +25,12 @@ public class Box extends Actor
                 world.player.peakJump = false;
                 world.player.setLocation(world.player.getX(), getY()-getImage().getHeight()/2-world.player.getImage().getHeight()/2+1);
             }
-            else if(world.player.getX() < getX()&&world.player.getY() > getY()-getImage().getHeight()/2+10&&world.player.getY() < getY()+getImage().getHeight()/2)
+            else if(world.player.getX() < getX()&&world.player.getY() > getY()-getImage().getHeight()/2+10&&world.player.getY() < getY()+getImage().getHeight()/2+50)
             {
                 world.player.hMovement = -2;
                 world.player.setLocation(world.player.getX()-1, world.player.getY());
             }
-            else if(world.player.getX() > getX()&&world.player.getY() > getY()-getImage().getHeight()/2+10&&world.player.getY() < getY()+getImage().getHeight()/2)
+            else if(world.player.getX() > getX()&&world.player.getY() > getY()-getImage().getHeight()/2+10&&world.player.getY() < getY()+getImage().getHeight()/2+50)
             {
                 world.player.hMovement = 2;
                 world.player.setLocation(world.player.getX()+1, world.player.getY());
