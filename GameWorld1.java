@@ -8,6 +8,20 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class GameWorld1 extends World
 {
+    int[][] world1 = {
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+        {0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+        {0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+        {0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+        {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+    
     Player player = new Player();
     /**
      * Constructor for objects of class GameWorld1.
@@ -16,8 +30,26 @@ public class GameWorld1 extends World
     public GameWorld1()
     {    
         super(1200, 600, 1); 
-        prepare();
+        //prepare();
+        addObject(player,609,175);
+        buildWorld(world1);
     }
+    
+    private void buildWorld(int[][] world)
+    {
+        for(int j = 0; j < 12; j++)
+        {
+            for(int i = 0; i < 24; i++)
+            {
+                if(world[j][i] == 1)
+                {
+                    Box box = new Box();
+                    addObject(box,i*50+25,j*50+25);
+                }
+            }
+        }
+    }
+    
     
     /**
      * Prepare the world for the start of the program.
@@ -42,7 +74,7 @@ public class GameWorld1 extends World
         Wall wall = new Wall();
         addObject(wall,172,434);
         Wall wall2 = new Wall();
-        addObject(wall2,1064,437);
+        addObject(wall,1064,437);
         addObject(player,609,175);
     }
 }
