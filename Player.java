@@ -51,12 +51,16 @@ public class Player extends SmoothMover
         {
             isGrounded = false;
             jump();
-            gravityModifier-=0.2;
+            gravityModifier-=0.1;
         }
         //jump code
         if((peakJump&&!isGrounded)&&gravityModifier < 2)
         {
-            gravityModifier+=0.4;
+            gravityModifier+=0.3;
+        }
+        if(jumpHeight > 10)
+        {
+            gravityModifier = 0.5;
         }
         if(Greenfoot.isKeyDown("space"))
         {
