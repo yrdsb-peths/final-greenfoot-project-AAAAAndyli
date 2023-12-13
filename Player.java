@@ -1,13 +1,12 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
-
 /**
- * The player
+ * Write a description of class Player here.
  * 
- * @author 7678rfyuf
- * @version December 2023
+ * @author (your name) 
+ * @version (a version number or a date)
  */
-public class Player extends Actor
+public class Player extends SmoothMover
 {
     int x = 0;
     int y = 0;
@@ -52,12 +51,12 @@ public class Player extends Actor
         {
             isGrounded = false;
             jump();
-            gravityModifier-=0.3;
+            gravityModifier-=0.2;
         }
         //jump code
         if((peakJump&&!isGrounded)&&gravityModifier < 2)
         {
-            gravityModifier+=0.5;
+            gravityModifier+=0.4;
         }
         if(Greenfoot.isKeyDown("space"))
         {
@@ -81,11 +80,11 @@ public class Player extends Actor
         isGrounded = isTouching(Platform.class);
         if(hMovement < 0)
         {
-            hMovement++;
+            hMovement+=0.75;
         }
         else if (hMovement > 0)
         {
-            hMovement--;
+            hMovement-=0.75;
         }
         dashable++;
     }
@@ -130,5 +129,4 @@ public class Player extends Actor
             dashable = 0;
         }
     }
-  
 }

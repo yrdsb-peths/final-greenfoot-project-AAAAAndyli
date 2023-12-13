@@ -19,20 +19,23 @@ public class Platform extends Actor
         GameWorld1 world = (GameWorld1) getWorld();
         if(isTouching(Player.class))
         {
-            if(world.player.getY() < getY())
+            if(world.player.getY() < getY()-getImage().getHeight()/2+10)
             {
                 isPlayerAbove = true;
                 world.player.gravityModifier = 0;
                 world.player.jumpHeight = 0;
                 world.player.isGrounded = true;
                 world.player.peakJump = false;
-                world.player.setLocation(world.player.getX(), getY()-2*getImage().getHeight()/3);
+                world.player.setLocation(world.player.getX(), getY()-getImage().getHeight()/2-world.player.getImage().getHeight()/2+1);
             }
-            else if(!world.player.isGrounded)
+            else
             {
                 isPlayerAbove = false;
+                world.player.peakJump = true;
+                world.player.gravityModifier = 2;
+                world.player.jumpHeight = 0;
                 world.player.setLocation(world.player.getX(), world.player.getY()+10);
-            }
+            }    
         }
     
         // Add your action code here.
