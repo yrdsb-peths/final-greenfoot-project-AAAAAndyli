@@ -8,18 +8,19 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class GameWorld1 extends World
 {
+    Box box = new Box();
     int[][] world1 = {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
+        {1,1,1,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,1,1,1},
         {0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
         {0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
-        {0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
-        {2,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+        {2,0,0,0,0,1,1,0,0,0,0,0,3,0,0,0,0,1,1,0,0,0,0,0},
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
     int[][] world2 = {
         {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -27,12 +28,12 @@ public class GameWorld1 extends World
         {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
         {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
+        {1,1,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
         {0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0},
         {0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
         {0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
         {0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
-        {2,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0},
+        {2,0,0,0,0,1,1,0,0,0,0,0,0,0,3,0,0,1,1,0,0,0,0,0},
         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
     
     Player player = new Player();
@@ -44,7 +45,7 @@ public class GameWorld1 extends World
     {    
         super(1200, 600, 1); 
         //prepare();
-        buildWorld(world2);
+        buildWorld(world1);
     }
     
     private void buildWorld(int[][] world)
@@ -62,35 +63,19 @@ public class GameWorld1 extends World
                 {
                     addObject(player,i*50+25,j*50+25);
                 }
+                else if(world[j][i] == 3)
+                {
+                    Enemy enemy = new Enemy();
+                    addObject(enemy,i*50+25,j*50+26);
+                }
             }
         }
     }
     
-    
-    /**
-     * Prepare the world for the start of the program.
-     * That is: create the initial objects and add them to the world.
-     */
-    private void prepare()
+    public boolean boxAtLocation(int x,int y)
     {
-        Platform platform = new Platform();
-        addObject(platform,72,574);
-        Platform platform2 = new Platform();
-        addObject(platform2,251,575);
-        Platform platform3 = new Platform();
-        addObject(platform3,442,575);
-        Platform platform4 = new Platform();
-        addObject(platform4,633,575);
-        Platform platform5 = new Platform();
-        addObject(platform5,824,575);
-        Platform platform6 = new Platform();
-        addObject(platform6,1014,575);
-        Platform platform7 = new Platform();
-        addObject(platform7,1187,575);
-        Wall wall = new Wall();
-        addObject(wall,172,434);
-        Wall wall2 = new Wall();
-        addObject(wall,1064,437);
-        addObject(player,609,175);
+        return getObjectsAt(x, y, Box.class).isEmpty();
     }
+    
+
 }

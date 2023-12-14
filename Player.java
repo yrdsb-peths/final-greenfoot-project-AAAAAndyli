@@ -37,14 +37,18 @@ public class Player extends SmoothMover
     public void act()
     {
         //movement
+        if(isAtEdge()) 
+        {
+            
+        }
         if(Greenfoot.isKeyDown("left"))
         {
-            hMovement -= 1.3;
+            hMovement -= 1;
             facing = "left";
         }
         if(Greenfoot.isKeyDown("right"))
         {
-            hMovement += 1.3;
+            hMovement += 1;
             facing = "right";
         }
         if(Greenfoot.isKeyDown("up"))
@@ -67,6 +71,7 @@ public class Player extends SmoothMover
             dash();
         }
         setLocation(getX()+(int)hMovement, getY()+jumpHeight);
+        bounding();
         if(!isGrounded)
         {
             if(!Greenfoot.isKeyDown("up")&&!peakJump)
@@ -100,7 +105,7 @@ public class Player extends SmoothMover
         if(peakJump == false)
         {
             isGrounded = false;
-            jumpHeight = -12;
+            jumpHeight = -10;
             jumpHeight -= gravityModifier;
         }
         if(isGrounded == false&&gravityModifier < -1)
@@ -124,13 +129,27 @@ public class Player extends SmoothMover
             }
             if(facing == "left")
             {
-                hMovement = -25;
+                hMovement -= 10;
             }
             else
             {
-                hMovement = 25;
+                hMovement += 10;
             }
             dashable = 0;
         }
+    }
+    public void bounding()
+    {
+        if(getX()>1195)
+        {
+            setLocation(1195, getY());
+            hMovement = 0;
+        }
+        else if(getX() < 5)
+        {
+            setLocation(5, getY());
+            hMovement = 0;
+        }
+
     }
 }

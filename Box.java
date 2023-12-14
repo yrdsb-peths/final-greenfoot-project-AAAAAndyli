@@ -17,7 +17,7 @@ public class Box extends Actor
         GameWorld1 world = (GameWorld1) getWorld();
         if(isTouching(Player.class))
         {
-            if(world.player.getY() < getY()-getImage().getHeight()/2+10)
+            if(world.player.getY() < getY()-getImage().getHeight()/2+10&&world.player.getX()-24.9999 < getX()&&world.player.getX()+24.9999 > getX())
             {
                 world.player.gravityModifier = 0;
                 world.player.jumpHeight = 0;
@@ -25,14 +25,14 @@ public class Box extends Actor
                 world.player.peakJump = false;
                 world.player.setLocation(world.player.getX(), getY()-getImage().getHeight()/2-world.player.getImage().getHeight()/2+1);
             }
-            else if(world.player.getX() < getX()&&world.player.getY() > getY()-getImage().getHeight()/2+10&&world.player.getY() < getY()+getImage().getHeight()/2+50)
+            else if(world.player.getX() < getX()&&world.player.getY() > getY()-getImage().getHeight()/2&&world.player.getY() < getY()+getImage().getHeight()/2+50)
             {
-                world.player.hMovement = -2;
+                world.player.hMovement = -1;
                 world.player.setLocation(world.player.getX()-1, world.player.getY());
             }
-            else if(world.player.getX() > getX()&&world.player.getY() > getY()-getImage().getHeight()/2+10&&world.player.getY() < getY()+getImage().getHeight()/2+50)
+            else if(world.player.getX() > getX()&&world.player.getY() > getY()-getImage().getHeight()/2&&world.player.getY() < getY()+getImage().getHeight()/2+50)
             {
-                world.player.hMovement = 2;
+                world.player.hMovement = 1;
                 world.player.setLocation(world.player.getX()+1, world.player.getY());
             } 
             if(world.player.getY() > getY()-getImage().getHeight()/2+10&&world.player.getX()-24 < getX()&&world.player.getX()+24 > getX())
@@ -44,4 +44,5 @@ public class Box extends Actor
             }
         }
     }
+
 }
