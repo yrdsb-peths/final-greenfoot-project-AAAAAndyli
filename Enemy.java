@@ -8,48 +8,53 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Enemy extends SmoothMover
 {
-    long lastAdded = System.currentTimeMillis();
-    boolean turnable = false;
-    int timesTurned = 0;
+    int health = 15;
     String direction = "right";
+    int iFrames = 0;
     /**
      * Act - do whatever the Enemy wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-
-    
     public void act()
     {
-        long curTime  = System.currentTimeMillis();
         GameWorld1 world = (GameWorld1) getWorld();
         if(direction == "right")
         {
             if(isTouching(Box.class)&&!world.boxAtLocation(getX()+25, getY()+28)&&world.boxAtLocation(getX()+25, getY()))
             {
-                move(5);
+                move(2);
             }
             else
             {
                 direction = "left";
-                move(-5);
+                move(-2);
             }
         }
         else if(direction == "left")
         {
             if(isTouching(Box.class)&&!world.boxAtLocation(getX()-25, getY()+28)&&world.boxAtLocation(getX()-25, getY()))
             {
-                move(-5);
+                move(-2);
             }
             else
             {
                 direction = "right";
-                move(5);
+                move(2);
             }
         }
-        if (curTime >= lastAdded + 10)
+        iFrames++;
+        touchingPlayer();
+    }
+    public void touchingPlayer()
+    {
+        GameWorld1 world = (GameWorld1) getWorld();
+        if(isTouching(Player.class)&& world.player.dashable < 10&&iFrames<10)
         {
-            turnable = true;
-            lastAdded  = curTime;
+            health--;
+        }
+        if(health <=0)
+        {
+            world.removeObject(this);
         }
     }
 }

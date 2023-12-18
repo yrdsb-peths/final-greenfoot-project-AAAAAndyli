@@ -85,7 +85,7 @@ public class Player extends SmoothMover
                 jumpHeight += gravityModifier;
             }
         }
-        isGrounded = isTouching(Platform.class);
+        isGrounded = isTouching(Box.class);
         if(hMovement < 0)
         {
             hMovement+=0.8;
@@ -120,7 +120,7 @@ public class Player extends SmoothMover
     {
         if(dashable > 100)
         {
-            if(!isTouching(Platform.class))
+            if(!isTouching(Box.class))
             {
                 jumpHeight = 0;
                 gravityModifier = 0;
