@@ -17,6 +17,7 @@ public class Player extends SmoothMover
     int jumpIndex = 0;
     int fallIndex = 0; 
     int landingIndex = 0;
+    int iFrames = 0;
     boolean isGrounded = true;
     boolean peakJump = false;
         
@@ -29,6 +30,7 @@ public class Player extends SmoothMover
      */
     public Player()
     {
+        
     }
     
     /**
@@ -36,11 +38,8 @@ public class Player extends SmoothMover
      */
     public void act()
     {
+        touchingEnemy();
         //movement
-        if(isAtEdge()) 
-        {
-            
-        }
         if(Greenfoot.isKeyDown("left"))
         {
             hMovement -= 1;
@@ -96,6 +95,7 @@ public class Player extends SmoothMover
             hMovement-=0.8;
         }
         dashable++;
+        iFrames++;
     }
     /**
      * Moves the elephant vertically, and controls how high the elephant can jump
@@ -150,6 +150,14 @@ public class Player extends SmoothMover
             setLocation(5, getY());
             hMovement = 0;
         }
-
+    }
+    public void touchingEnemy()
+    {
+        GameWorld1 world = (GameWorld1) getWorld();
+        if(isTouching(Enemy.class)&& dashable > 10&& iFrames > 50)
+        {
+            world.playerHP --;
+            iFrames = 0;
+        }
     }
 }

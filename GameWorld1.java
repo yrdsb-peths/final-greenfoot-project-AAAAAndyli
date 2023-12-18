@@ -8,6 +8,9 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class GameWorld1 extends World
 {
+    int playerHP = 20;
+    Label HP;
+    
     Box box = new Box();
     int[][] world1 = {
         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -46,6 +49,12 @@ public class GameWorld1 extends World
         super(1200, 600, 1); 
         //prepare();
         buildWorld(world1);
+        HP = new Label(0,40);
+        addObject(HP, 50, 30);
+    }
+    public void act()
+    {
+        HP.setValue(playerHP);
     }
     
     private void buildWorld(int[][] world)
