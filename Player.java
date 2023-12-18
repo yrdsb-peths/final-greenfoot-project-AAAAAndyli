@@ -11,7 +11,7 @@ public class Player extends SmoothMover
     int x = 0;
     int y = 0;
     double hMovement = 0;
-    int jumpHeight = 0;
+    double jumpHeight = 0;
     double gravityModifier = 0;
     int dashable = 0;
     int jumpIndex = 0;
@@ -55,16 +55,16 @@ public class Player extends SmoothMover
         {
             isGrounded = false;
             jump();
-            gravityModifier-=0.1;
+            gravityModifier-=0.05;
         }
         //jump code
         if((peakJump&&!isGrounded)&&gravityModifier < 2)
         {
-            gravityModifier+=0.3;
+            gravityModifier+=0.7;
         }
         if(jumpHeight > 10)
         {
-            gravityModifier = 0.5;
+            gravityModifier = 0.3;
         }
         if(Greenfoot.isKeyDown("space"))
         {
@@ -89,11 +89,11 @@ public class Player extends SmoothMover
         isGrounded = isTouching(Platform.class);
         if(hMovement < 0)
         {
-            hMovement+=0.75;
+            hMovement+=0.8;
         }
         else if (hMovement > 0)
         {
-            hMovement-=0.75;
+            hMovement-=0.8;
         }
         dashable++;
     }
@@ -105,7 +105,7 @@ public class Player extends SmoothMover
         if(peakJump == false)
         {
             isGrounded = false;
-            jumpHeight = -10;
+            jumpHeight = -8;
             jumpHeight -= gravityModifier;
         }
         if(isGrounded == false&&gravityModifier < -1)
@@ -129,11 +129,11 @@ public class Player extends SmoothMover
             }
             if(facing == "left")
             {
-                hMovement -= 10;
+                hMovement -= 20;
             }
             else
             {
-                hMovement += 10;
+                hMovement += 20;
             }
             dashable = 0;
         }

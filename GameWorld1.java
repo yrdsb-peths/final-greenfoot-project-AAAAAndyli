@@ -77,5 +77,9 @@ public class GameWorld1 extends World
         return getObjectsAt(x, y, Box.class).isEmpty();
     }
     
+    public void respawn()
+    {
+        
+    }
 
 }

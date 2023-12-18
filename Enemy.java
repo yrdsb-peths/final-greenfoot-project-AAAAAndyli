@@ -8,69 +8,48 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Enemy extends SmoothMover
 {
+    long lastAdded = System.currentTimeMillis();
+    boolean turnable = false;
+    int timesTurned = 0;
+    String direction = "right";
     /**
      * Act - do whatever the Enemy wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+
     
     public void act()
     {
-        
+        long curTime  = System.currentTimeMillis();
         GameWorld1 world = (GameWorld1) getWorld();
-        if(getRotation() == 0)
+        if(direction == "right")
         {
-            if(isTouching(Box.class)&&!world.boxAtLocation(getX()-25, getY()+27))
+            if(isTouching(Box.class)&&!world.boxAtLocation(getX()+25, getY()+28)&&world.boxAtLocation(getX()+25, getY()))
             {
                 move(5);
             }
             else
             {
-                turn();
+                direction = "left";
+                move(-5);
             }
         }
-        else if(getRotation() == 90)
+        else if(direction == "left")
         {
-            if(isTouching(Box.class)&&!world.boxAtLocation(getX()-25, getY()-25))
+            if(isTouching(Box.class)&&!world.boxAtLocation(getX()-25, getY()+28)&&world.boxAtLocation(getX()-25, getY()))
             {
-                move(5);
+                move(-5);
             }
             else
             {
-                turn();
-            }
-        }
-        else if(getRotation() == 180)
-        {
-            if(isTouching(Box.class)&&!world.boxAtLocation(getX()+25, getY()-25))
-            {
+                direction = "right";
                 move(5);
             }
-            else
-            {
-                turn();
-            }
         }
-        else if(getRotation() == 270)
+        if (curTime >= lastAdded + 10)
         {
-            if(isTouching(Box.class)&&!world.boxAtLocation(getX()+25, getY()+25))
-            {
-                move(5);
-            }
-            else
-            {
-                turn();
-            }
+            turnable = true;
+            lastAdded  = curTime;
         }
-    }
-    public void turn()
-    {
-        turn(90);
-        for(int i = 0; i < 25; i++)
-        {
-            move(2);      
-        }
-        turn(90);
-        move(2);      
-        turn(-90);
     }
 }
