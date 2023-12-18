@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Enemy extends SmoothMover
 {
-    int health = 15;
+    int health = 30;
     String direction = "right";
     int iFrames = 0;
     /**
@@ -48,9 +48,17 @@ public class Enemy extends SmoothMover
     public void touchingPlayer()
     {
         GameWorld1 world = (GameWorld1) getWorld();
-        if(isTouching(Player.class)&& world.player.dashable < 10&&iFrames<10)
+        if(isTouching(Player.class)&& world.player.dashable < 10&&iFrames>10)
         {
-            health--;
+            if(world.player.hMovement>0)
+            {
+                health-=(int)world.player.hMovement;
+            }
+            else
+            {
+                health+=(int)world.player.hMovement;
+            }
+            iFrames = 0;
         }
         if(health <=0)
         {
