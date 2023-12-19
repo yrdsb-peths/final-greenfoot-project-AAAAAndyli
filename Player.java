@@ -158,6 +158,7 @@ public class Player extends SmoothMover
         {
             world.playerHP --;
             iFrames = 0;
+            hMovement = 0;
         }
     }
 }

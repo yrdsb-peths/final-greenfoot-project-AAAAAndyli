@@ -14,7 +14,9 @@ public class AEnemy extends Enemy
      */
     //state 0 = patrolling
     //state 1 = hunting
+    
     int state = 0;
+    double jumpHeight = 0;
     public void act()
     {
         GameWorld1 world = (GameWorld1) getWorld();
@@ -47,11 +49,19 @@ public class AEnemy extends Enemy
         }
         else
         {
-            
+            if(world.player.getX() > getX())
+            {
+                if(isTouching(Box.class)&&!world.boxAtLocation(getX()+25, getY()+28)&&world.boxAtLocation(getX()+25, getY()))
+                {
+                    move(2);
+                    jumpHeight = 0;
+                }
+                else if(!world.boxAtLocation(getX()+25, getY())&&world.player.getY() > getY())
+                {
+                    setLocation(getX()+2,getY()+10-jumpHeight);
+                    jumpHeight--;xgv
+                }
+            }
         }
-    }
-    public void patrolState()
-    {
-        
     }
 }
