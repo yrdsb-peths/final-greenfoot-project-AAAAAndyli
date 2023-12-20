@@ -15,35 +15,53 @@ public class AEnemy extends Enemy
     //state 0 = patrolling
     //state 1 = hunting
     
+    boolean isGrounded = true;
     int state = 0;
     double jumpHeight = 0;
+    public AEnemy()
+    {
+        speed = 3;
+    }
     public void act()
     {
         GameWorld1 world = (GameWorld1) getWorld();
+        if(isTouching(Box.class))
+        {
+            setLocation(getX(),getY()-0.5);
+        }
+        if(!world.boxAtLocation(getX(), getY()+20))
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            setLocation(getX(),getY()+0.1);
+            isGrounded = false;
+        }
         if(state == 0)
         {
             if(direction == "right")
             {
-                if(isTouching(Box.class)&&!world.boxAtLocation(getX()+25, getY()+28)&&world.boxAtLocation(getX()+25, getY()))
+                if(isTouching(Box.class)&&!world.boxAtLocation(getX()+26, getY()+28)&&world.boxAtLocation(getX()+26, getY()))
                 {
-                    move(2);
+                    move(speed);
                 }
                 else
                 {
                     direction = "left";
-                    move(-2);
+                    move(-1*speed);
                 }
             }
             else if(direction == "left")
             {
-                if(isTouching(Box.class)&&!world.boxAtLocation(getX()-25, getY()+28)&&world.boxAtLocation(getX()-25, getY()))
+                if(isTouching(Box.class)&&!world.boxAtLocation(getX()-26, getY()+28)&&world.boxAtLocation(getX()-26, getY()))
                 {
-                    move(-2);
+                    move(-1*speed);
                 }
                 else
                 {
                     direction = "right";
-                    move(2);
+                    move(speed);
                 }
             }
         }
@@ -51,17 +69,56 @@ public class AEnemy extends Enemy
         {
             if(world.player.getX() > getX())
             {
-                if(isTouching(Box.class)&&!world.boxAtLocation(getX()+25, getY()+28)&&world.boxAtLocation(getX()+25, getY()))
+                if(isTouching(Box.class)&&!world.boxAtLocation(getX()+26, getY()+28)&&world.boxAtLocation(getX()+26, getY())&&!world.boxAtLocation(getX(), getY()+26))
                 {
-                    move(2);
+                    move(speed+2);
                     jumpHeight = 0;
                 }
-                else if(!world.boxAtLocation(getX()+25, getY())&&world.player.getY() > getY())
+                else if((world.player.getY() < getY())||(!world.boxAtLocation(getX()+26, getY()-26))&&isGrounded)
                 {
-                    setLocation(getX()+2,getY()+10-jumpHeight);
-                    jumpHeight--;xgv
+                    setLocation(getX()+speed,getY()-24+jumpHeight);
+                    jumpHeight++;
+                    isGrounded = false;
+                }
+                else if(!isGrounded)
+                {
+                    setLocation(getX()+speed,getY()-24+jumpHeight);
+                    jumpHeight++;
+                }
+            }
+            else if(world.player.getX() < getX())
+            {
+                if(isTouching(Box.class)&&!world.boxAtLocation(getX()-26, getY()+28)&&world.boxAtLocation(getX()-26, getY())&&!world.boxAtLocation(getX(), getY()+26))
+                {
+                    move(-1*(speed+2));
+                    jumpHeight = 0;
+                }
+                else if((world.player.getY() < getY())||(!world.boxAtLocation(getX()-26, getY()-26))&&isGrounded)
+                {
+                    setLocation(getX()-speed,getY()-24+jumpHeight);
+                    jumpHeight++;
+                    isGrounded = false;
+                }
+                else if(!isGrounded)
+                {
+                    setLocation(getX()-speed,getY()-24+jumpHeight);
+                    jumpHeight++;
                 }
             }
         }
+        if(!isGrounded||300>Math.sqrt((world.player.getY() - getY()) * (world.player.getY() - getY()) + (world.player.getX() - getX()) * (world.player.getX() - getX())))
+        {
+            state = 1;
+        }
+        else
+        {
+            state = 0;
+        }
+        if(jumpHeight > 27)
+        {
+            jumpHeight = 27;
+        }
+        iFrames++;
+        touchingPlayer();
     }
 }

@@ -11,6 +11,7 @@ public class Enemy extends SmoothMover
     int health = 30;
     String direction = "right";
     int iFrames = 0;
+    int speed = 3;
     /**
      * Act - do whatever the Enemy wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -22,24 +23,24 @@ public class Enemy extends SmoothMover
         {
             if(isTouching(Box.class)&&!world.boxAtLocation(getX()+25, getY()+28)&&world.boxAtLocation(getX()+25, getY()))
             {
-                move(2);
+                move(speed);
             }
             else
             {
                 direction = "left";
-                move(-2);
+                move(-1*speed);
             }
         }
         else if(direction == "left")
         {
             if(isTouching(Box.class)&&!world.boxAtLocation(getX()-25, getY()+28)&&world.boxAtLocation(getX()-25, getY()))
             {
-                move(-2);
+                move(-1*speed);
             }
             else
             {
                 direction = "right";
-                move(2);
+                move(speed);
             }
         }
         iFrames++;
@@ -63,6 +64,7 @@ public class Enemy extends SmoothMover
         if(health <=0)
         {
             world.removeObject(this);
+            world.playerHP++;
         }
     }
 }
