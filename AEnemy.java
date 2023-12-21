@@ -27,16 +27,16 @@ public class AEnemy extends Enemy
         GameWorld1 world = (GameWorld1) getWorld();
         if(isTouching(Box.class))
         {
-            setLocation(getX(),getY()-0.5);
+            setLocation(getX(),getY()-0.1);
         }
-        if(!world.boxAtLocation(getX(), getY()+20))
+        if(!world.boxAtLocation(getX(), getY()+27))
         {
             isGrounded = true;
         }
-        else
+        else if((world.boxAtLocation(getX(), getY()+27)))
         {
-            setLocation(getX(),getY()+0.1);
             isGrounded = false;
+            setLocation(getX(),getY()+10);
         }
         if(state == 0)
         {
@@ -76,13 +76,12 @@ public class AEnemy extends Enemy
                 }
                 else if((world.player.getY() < getY())||(!world.boxAtLocation(getX()+26, getY()-26))&&isGrounded)
                 {
-                    setLocation(getX()+speed,getY()-24+jumpHeight);
+                    setLocation(getX()+1,getY()-25+jumpHeight);
                     jumpHeight++;
-                    isGrounded = false;
                 }
                 else if(!isGrounded)
                 {
-                    setLocation(getX()+speed,getY()-24+jumpHeight);
+                    setLocation(getX()+1,getY()-25+jumpHeight);
                     jumpHeight++;
                 }
             }
@@ -95,18 +94,17 @@ public class AEnemy extends Enemy
                 }
                 else if((world.player.getY() < getY())||(!world.boxAtLocation(getX()-26, getY()-26))&&isGrounded)
                 {
-                    setLocation(getX()-speed,getY()-24+jumpHeight);
+                    setLocation(getX()-1,getY()-25+jumpHeight);
                     jumpHeight++;
-                    isGrounded = false;
                 }
                 else if(!isGrounded)
                 {
-                    setLocation(getX()-speed,getY()-24+jumpHeight);
+                    setLocation(getX()-1,getY()-25+jumpHeight);
                     jumpHeight++;
                 }
             }
         }
-        if(!isGrounded||300>Math.sqrt((world.player.getY() - getY()) * (world.player.getY() - getY()) + (world.player.getX() - getX()) * (world.player.getX() - getX())))
+        if(300>Math.sqrt((world.player.getY() - getY()) * (world.player.getY() - getY()) + (world.player.getX() - getX()) * (world.player.getX() - getX())))
         {
             state = 1;
         }
@@ -114,9 +112,19 @@ public class AEnemy extends Enemy
         {
             state = 0;
         }
-        if(jumpHeight > 27)
+        if(jumpHeight > 30)
         {
-            jumpHeight = 27;
+            jumpHeight = 30;
+        }
+        if(!world.boxAtLocation(getX()-26, getY()))
+        {
+            direction = "right";
+            move(speed);
+        }
+        else if(!world.boxAtLocation(getX()+26, getY()))
+        {
+            direction = "left";
+            move(-1*speed);
         }
         iFrames++;
         touchingPlayer();
