@@ -160,5 +160,17 @@ public class Player extends SmoothMover
             iFrames = 0;
             hMovement = 0;
         }
+        else if(isTouching(Enemy.class)&& dashable < 10)
+        {
+            dashable = 0;
+            if(facing == "left")
+            {
+                hMovement -= 3;
+            }
+            else
+            {
+                hMovement += 3;
+            }
+        }
     }
 }
