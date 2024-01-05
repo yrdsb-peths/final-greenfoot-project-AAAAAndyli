@@ -13,6 +13,7 @@ public class MapCreatorTool extends World
      * Constructor for objects of class MapCreatorTool.
      * 
      */
+    int[][] worldGen = new int[24][12];
     public MapCreatorTool()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
@@ -26,22 +27,29 @@ public class MapCreatorTool extends World
         {
             int x = mouse.getX();
             int y = mouse.getY();
-            x = Math.round(x/49)*50+25;
-            y = Math.round(y/49)*50+25;
+            x = (int)Math.round(x/50)*50+25;
+            y = (int)Math.round(y/50)*50+25;
             if(mode == 1)
             {
                 placeBox(x,y);
+                worldGen[mouse.getX()/50][mouse.getY()/50] = 1;
             }
             else if(mode == 2)
             {
                 placeEnemy(x,y);
+                worldGen[mouse.getX()/50][mouse.getY()/50] = 3;
             }
             else if(mode == 3)
             {
                 placeAdvancedEnemy(x,y);
+                worldGen[mouse.getX()/50][mouse.getY()/50] = 4;
             }
         }
         select();
+        if(Greenfoot.isKeyDown("enter"))
+        {
+            printArray(worldGen);
+        }
     }
     public void select()
     {
@@ -72,5 +80,20 @@ public class MapCreatorTool extends World
     {
         VAEnemy aEnemy = new VAEnemy();
         addObject(aEnemy,x,y);
+    }
+    
+    public void printArray(int[][] arr)
+    {
+        System.out.println("New world:");
+        
+        for(int j = 0; j < 12; j++)
+        {
+            for(int i = 0; i < 24; i++)
+            {
+                System.out.print(arr[i][j]);
+                System.out.print(", ");
+            }
+            System.out.println("");
+        }
     }
 }
