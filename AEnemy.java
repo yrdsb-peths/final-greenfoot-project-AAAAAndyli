@@ -26,12 +26,13 @@ public class AEnemy extends Enemy
     {
         GameWorld world = (GameWorld) getWorld();
         
-        if(!world.boxAtLocation(getX(), getY()+27))
+        if(!world.boxAtLocation(getX(), getY()+26))
         {
             isGrounded = true;
         }
-        else 
+        else
         {
+            isGrounded = false;
             setLocation(getX(),getY()+10);
         }
         if(state == 0)
@@ -70,7 +71,7 @@ public class AEnemy extends Enemy
                     move(speed+2);
                     jumpHeight = 0;
                 }
-                else if((world.player.getY() < getY())||(!world.boxAtLocation(getX()+26, getY()-26))&&isGrounded)
+                if(((world.player.getY()+25 < getY())||(!world.boxAtLocation(getX()+26, getY()-26)))&&isGrounded)
                 {
                     setLocation(getX()+1,getY()-25+jumpHeight);
                     jumpHeight++;
@@ -88,7 +89,7 @@ public class AEnemy extends Enemy
                     move(-1*(speed+2));
                     jumpHeight = 0;
                 }
-                else if((world.player.getY() < getY())||(!world.boxAtLocation(getX()-26, getY()-26))&&isGrounded)
+                if(((world.player.getY()+25 < getY())||(!world.boxAtLocation(getX()-26, getY()-26)))&&isGrounded)
                 {
                     setLocation(getX()-1,getY()-25+jumpHeight);
                     jumpHeight++;
