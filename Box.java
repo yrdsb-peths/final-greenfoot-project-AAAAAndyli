@@ -25,7 +25,7 @@ public class Box extends Actor
                 world.player.peakJump = false;
                 world.player.setLocation(world.player.getX(), getY()-getImage().getHeight()/2-world.player.getImage().getHeight()/2+1);
             }
-            else if(world.player.getY() > getY()-getImage().getHeight()/2+10&&(world.player.getX()-25 < getX()&&world.player.getX()+25 > getX()))
+            else if(world.player.getY() > getY()-getImage().getHeight()/2+10&&(world.player.getX()-49 < getX()&&world.player.getX()+49 > getX()))
             {
                 world.player.peakJump = true;
                 world.player.gravityModifier = 2;
@@ -34,13 +34,13 @@ public class Box extends Actor
             }
             if(world.player.getX() < getX()&&world.player.getY() > getY()-getImage().getHeight()/2&&world.player.getY() < getY()+getImage().getHeight()/2)
             {
-                world.player.hMovement = -1;
-                world.player.setLocation(world.player.getX()-1, world.player.getY());
+                world.player.hMovement = 0;
+                world.player.setLocation(getX()-getImage().getWidth(), world.player.getY());
             }
             else if(world.player.getX() > getX()&&world.player.getY() > getY()-getImage().getHeight()/2&&world.player.getY() < getY()+getImage().getHeight()/2)
             {
-                world.player.hMovement = 1;
-                world.player.setLocation(world.player.getX()+1, world.player.getY());
+                world.player.hMovement = 0;
+                world.player.setLocation(getX()+getImage().getWidth(), world.player.getY());
             } 
         }
     }
