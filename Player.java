@@ -153,7 +153,7 @@ public class Player extends SmoothMover
     }
     public void touchingEnemy()
     {
-        GameWorld1 world = (GameWorld1) getWorld();
+        GameWorld world = (GameWorld) getWorld();
         if(isTouching(Enemy.class)&& dashable > 10&& iFrames > 50)
         {
             world.playerHP --;

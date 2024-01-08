@@ -24,18 +24,14 @@ public class AEnemy extends Enemy
     }
     public void act()
     {
-        GameWorld1 world = (GameWorld1) getWorld();
-        if(isTouching(Box.class))
-        {
-            setLocation(getX(),getY()-0.1);
-        }
+        GameWorld world = (GameWorld) getWorld();
+        
         if(!world.boxAtLocation(getX(), getY()+27))
         {
             isGrounded = true;
         }
-        else if((world.boxAtLocation(getX(), getY()+27)))
+        else 
         {
-            isGrounded = false;
             setLocation(getX(),getY()+10);
         }
         if(state == 0)
@@ -119,12 +115,12 @@ public class AEnemy extends Enemy
         if(!world.boxAtLocation(getX()-26, getY()))
         {
             direction = "right";
-            move(speed);
+            move(5);
         }
         else if(!world.boxAtLocation(getX()+26, getY()))
         {
             direction = "left";
-            move(-1*speed);
+            move(-5);
         }
         iFrames++;
         touchingPlayer();

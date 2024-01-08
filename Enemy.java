@@ -18,7 +18,7 @@ public class Enemy extends SmoothMover
      */
     public void act()
     {
-        GameWorld1 world = (GameWorld1) getWorld();
+        GameWorld world = (GameWorld) getWorld();
         if(direction == "right")
         {
             if(isTouching(Box.class)&&!world.boxAtLocation(getX()+25, getY()+28)&&world.boxAtLocation(getX()+25, getY()))
@@ -48,7 +48,7 @@ public class Enemy extends SmoothMover
     }
     public void touchingPlayer()
     {
-        GameWorld1 world = (GameWorld1) getWorld();
+        GameWorld world = (GameWorld) getWorld();
         if(isTouching(Player.class)&& world.player.dashable < 10&&iFrames>10)
         {
             if(world.player.hMovement>0)
