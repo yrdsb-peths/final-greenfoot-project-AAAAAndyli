@@ -20,7 +20,7 @@ public class AEnemy extends Enemy
     double jumpHeight = 0;
     public AEnemy()
     {
-        speed = 3;
+        speed = 2;
     }
     public void act()
     {
@@ -29,11 +29,16 @@ public class AEnemy extends Enemy
         if(!world.boxAtLocation(getX(), getY()+26))
         {
             isGrounded = true;
+            setLocation(getX(),getY()-0.1);
         }
         else
         {
             isGrounded = false;
             setLocation(getX(),getY()+10);
+        }
+        if(getY() > 700)
+        {
+            health = -99;
         }
         if(state == 0)
         {
@@ -73,12 +78,12 @@ public class AEnemy extends Enemy
                 }
                 if(((world.player.getY()+25 < getY())||(!world.boxAtLocation(getX()+26, getY()-26)))&&isGrounded)
                 {
-                    setLocation(getX()+1,getY()-25+jumpHeight);
+                    setLocation(getX()+3,getY()-25+jumpHeight);
                     jumpHeight++;
                 }
                 else if(!isGrounded)
                 {
-                    setLocation(getX()+1,getY()-25+jumpHeight);
+                    setLocation(getX()+3,getY()-25+jumpHeight);
                     jumpHeight++;
                 }
             }
@@ -91,12 +96,12 @@ public class AEnemy extends Enemy
                 }
                 if(((world.player.getY()+25 < getY())||(!world.boxAtLocation(getX()-26, getY()-26)))&&isGrounded)
                 {
-                    setLocation(getX()-1,getY()-25+jumpHeight);
+                    setLocation(getX()-3,getY()-25+jumpHeight);
                     jumpHeight++;
                 }
                 else if(!isGrounded)
                 {
-                    setLocation(getX()-1,getY()-25+jumpHeight);
+                    setLocation(getX()-3,getY()-25+jumpHeight);
                     jumpHeight++;
                 }
             }
@@ -124,6 +129,6 @@ public class AEnemy extends Enemy
             move(-5);
         }
         iFrames++;
-        touchingPlayer();
+        death();
     }
 }

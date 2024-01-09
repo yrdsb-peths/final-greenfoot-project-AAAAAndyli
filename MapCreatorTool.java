@@ -85,15 +85,18 @@ public class MapCreatorTool extends World
     public void printArray(int[][] arr)
     {
         System.out.println("New world:");
-        
+        System.out.print("{");
         for(int j = 0; j < 12; j++)
         {
+            System.out.print("{");
             for(int i = 0; i < 24; i++)
             {
                 System.out.print(arr[i][j]);
                 System.out.print(", ");
             }
+            System.out.print("},");
             System.out.println("");
         }
+        System.out.print("};");
     }
 }
