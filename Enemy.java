@@ -44,9 +44,9 @@ public class Enemy extends SmoothMover
             }
         }
         iFrames++;
-        touchingPlayer();
+        death();
     }
-    public void touchingPlayer()
+    public void death()
     {
         GameWorld world = (GameWorld) getWorld();
         if(isTouching(Player.class)&& world.player.dashable < 10&&iFrames>10)

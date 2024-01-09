@@ -65,7 +65,7 @@ public class Player extends SmoothMover
         {
             gravityModifier = 0.3;
         }
-        if(Greenfoot.isKeyDown("space"))
+        if(Greenfoot.isKeyDown("space")||dashable < 21)
         {
             dash();
         }
@@ -122,33 +122,43 @@ public class Player extends SmoothMover
         {
             if(!isTouching(Box.class))
             {
-                jumpHeight = 0;
-                gravityModifier = 0;
+                jumpHeight = 1;
+                gravityModifier = -1;
                 peakJump = true;
                 isGrounded = false;
             }
             if(facing == "left")
             {
-                hMovement -= 20;
+                hMovement = -20;
             }
             else
             {
-                hMovement += 20;
+                hMovement = 20;
             }
             dashable = 0;
+        }
+        else if(dashable == 20)
+        {
+            hMovement = 0;
         }
     }
     public void bounding()
     {
-        if(getX()>1195)
+        GameWorld world = (GameWorld) getWorld();
+        if(getX()>1190)
         {
-            setLocation(1195, getY());
+            setLocation(1190, getY());
             hMovement = 0;
         }
-        else if(getX() < 5)
+        else if(getX() < 10)
         {
-            setLocation(5, getY());
+            setLocation(10, getY());
             hMovement = 0;
+        }
+        if(getY() > 700)
+        {
+            setLocation(world.playerSpawnX, world.playerSpawnY);
+            world.playerHP--;
         }
     }
     public void touchingEnemy()
