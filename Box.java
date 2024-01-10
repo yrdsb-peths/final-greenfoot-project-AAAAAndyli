@@ -17,7 +17,7 @@ public class Box extends Actor
         GameWorld world = (GameWorld) getWorld();
         if(isTouching(Player.class))
         {
-            if(world.player.getY() < getY()-getImage().getHeight()/2&&(world.player.getX()-25 < getX()||world.player.getX()+25 > getX()))
+            if(world.player.getY() < getY()-getImage().getHeight()/2&&(world.player.getX()-40 < getX()&&world.player.getX()+40 > getX()))
             {
                 world.player.gravityModifier = 0;
                 world.player.jumpHeight = 0;
@@ -35,12 +35,12 @@ public class Box extends Actor
             if(world.player.getX() < getX()&&world.player.getY() > getY()-getImage().getHeight()/2&&world.player.getY() < getY()+getImage().getHeight()/2)
             {
                 world.player.hMovement = 0;
-                world.player.setLocation(getX()-getImage().getWidth(), world.player.getY());
+                world.player.setLocation(getX()-getImage().getWidth()+2, world.player.getY());
             }
             else if(world.player.getX() > getX()&&world.player.getY() > getY()-getImage().getHeight()/2&&world.player.getY() < getY()+getImage().getHeight()/2)
             {
                 world.player.hMovement = 0;
-                world.player.setLocation(getX()+getImage().getWidth(), world.player.getY());
+                world.player.setLocation(getX()+getImage().getWidth()-2, world.player.getY());
             } 
         }
     }

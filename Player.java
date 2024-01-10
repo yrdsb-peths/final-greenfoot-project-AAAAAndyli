@@ -95,6 +95,14 @@ public class Player extends SmoothMover
         {
             hMovement-=0.8;
         }
+        if(hMovement < -10&&dashable > 50)
+        {
+            hMovement=-10;
+        }
+        else if (hMovement > 10&&dashable > 50)
+        {
+            hMovement=10;
+        }
         dashable++;
         iFrames++;
     }
@@ -106,7 +114,7 @@ public class Player extends SmoothMover
         if(peakJump == false)
         {
             isGrounded = false;
-            jumpHeight = -8;
+            jumpHeight = -9;
             jumpHeight -= gravityModifier;
         }
         if(isGrounded == false&&gravityModifier < -1)
