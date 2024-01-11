@@ -29,12 +29,10 @@ public class AEnemy extends Enemy
         if(!world.boxAtLocation(getX(), getY()+26))
         {
             isGrounded = true;
-            setLocation(getX(),getY()-0.1);
         }
         else
         {
             isGrounded = false;
-            setLocation(getX(),getY()+10);
         }
         if(getY() > 700)
         {
@@ -42,28 +40,52 @@ public class AEnemy extends Enemy
         }
         if(state == 0)
         {
-            if(direction == "right")
+            if(isGrounded)
             {
-                if(isTouching(Box.class)&&!world.boxAtLocation(getX()+26, getY()+28)&&world.boxAtLocation(getX()+26, getY()))
+                if(direction == "right")
                 {
-                    move(speed);
+                    if(!world.boxAtLocation(getX()+26, getY()+30))
+                    {
+                        move(speed);
+                    }
+                    else
+                    {
+                        direction = "left";
+                        move(-1*speed);
+                    }
                 }
-                else
+                else if(direction == "left")
                 {
-                    direction = "left";
-                    move(-1*speed);
+                    if(!world.boxAtLocation(getX()-26, getY()+30))
+                    {
+                        move(-1*speed);
+                    }
+                    else
+                    {
+                        direction = "right";
+                        move(speed);
+                    }
                 }
             }
-            else if(direction == "left")
+            else
             {
-                if(isTouching(Box.class)&&!world.boxAtLocation(getX()-26, getY()+28)&&world.boxAtLocation(getX()-26, getY()))
+                if(direction == "right")
+                {
+                    move(speed);
+                    if(isTouching(Box.class)||getX() > 1200)
+                    {
+                        direction = "left";
+                        move(-1*speed);
+                    }
+                }
+                else if(direction == "left")
                 {
                     move(-1*speed);
-                }
-                else
-                {
-                    direction = "right";
-                    move(speed);
+                    if(isTouching(Box.class)||getX() < 0)
+                    {
+                        direction = "right";
+                        move(speed);
+                    }
                 }
             }
         }
@@ -71,38 +93,32 @@ public class AEnemy extends Enemy
         {
             if(world.player.getX() > getX())
             {
-                if(isTouching(Box.class)&&!world.boxAtLocation(getX()+26, getY()+28)&&world.boxAtLocation(getX()+26, getY())&&!world.boxAtLocation(getX(), getY()+26))
+                if(!world.boxAtLocation(getX(), getY()+26)||(!world.boxAtLocation(getX()+26, getY()-25))&&!world.boxAtLocation(getX(), getY()+25))
                 {
                     move(speed+2);
-                    jumpHeight = 0;
                 }
-                if(((world.player.getY()+25 < getY())||(!world.boxAtLocation(getX()+26, getY()-26)))&&isGrounded)
+                if(((world.player.getY() < getY())||(!world.boxAtLocation(getX()+26, getY()-25)))&&world.boxAtLocation(getX(), getY()-25))
                 {
-                    setLocation(getX()+3,getY()-25+jumpHeight);
-                    jumpHeight++;
+                    setLocation(getX()+((speed+2)/2),getY()-3);
                 }
-                else if(!isGrounded)
+                else if(((world.player.getY() > getY()))&&world.boxAtLocation(getX(), getY()+25))
                 {
-                    setLocation(getX()+3,getY()-25+jumpHeight);
-                    jumpHeight++;
+                    setLocation(getX()+((speed+2)/2),getY()+3);
                 }
             }
             else if(world.player.getX() < getX())
             {
-                if(isTouching(Box.class)&&!world.boxAtLocation(getX()-26, getY()+28)&&world.boxAtLocation(getX()-26, getY())&&!world.boxAtLocation(getX(), getY()+26))
+                if(!world.boxAtLocation(getX(), getY()+26)||!world.boxAtLocation(getX(), getY()-25)||!world.boxAtLocation(getX(), getY()+25))
                 {
-                    move(-1*(speed+2));
-                    jumpHeight = 0;
+                    move(-1*speed-2);
                 }
-                if(((world.player.getY()+25 < getY())||(!world.boxAtLocation(getX()-26, getY()-26)))&&isGrounded)
+                if(((world.player.getY() < getY())||(!world.boxAtLocation(getX()-26, getY()-25)))&&world.boxAtLocation(getX(), getY()-25))
                 {
-                    setLocation(getX()-3,getY()-25+jumpHeight);
-                    jumpHeight++;
+                    setLocation(getX()+((-1*speed-2)/2),getY()-3);
                 }
-                else if(!isGrounded)
+                else if(((world.player.getY() > getY()))&&world.boxAtLocation(getX(), getY()+25))
                 {
-                    setLocation(getX()-3,getY()-25+jumpHeight);
-                    jumpHeight++;
+                    setLocation(getX()+((-1*speed-2)/2),getY()+3);
                 }
             }
         }
@@ -114,10 +130,6 @@ public class AEnemy extends Enemy
         {
             state = 0;
         }
-        if(jumpHeight > 30)
-        {
-            jumpHeight = 30;
-        }
         if(!world.boxAtLocation(getX()-26, getY()))
         {
             direction = "right";
@@ -127,6 +139,14 @@ public class AEnemy extends Enemy
         {
             direction = "left";
             move(-5);
+        }
+        if(!world.boxAtLocation(getX(), getY()-25))
+        {
+            setLocation(getX(),getY()+3);
+        }
+        if(!world.boxAtLocation(getX(), getY()+25))
+        {
+            setLocation(getX(),getY()-3);
         }
         iFrames++;
         death();
