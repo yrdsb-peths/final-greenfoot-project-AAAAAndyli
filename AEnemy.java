@@ -18,9 +18,18 @@ public class AEnemy extends Enemy
     boolean isGrounded = true;
     int state = 0;
     double jumpHeight = 0;
+    GreenfootImage[] floatRight = new GreenfootImage[5];
+    GreenfootImage[] floatLeft = new GreenfootImage[5];
     public AEnemy()
     {
         speed = 2;
+        for(int i = 0; i < 5; i++)
+        {
+            floatRight[i] = new GreenfootImage("images/Enemies/advancedRobot/Abot" + i + ".png");
+            floatLeft[i] = new GreenfootImage("images/Enemies/advancedRobot/Abot" + i + ".png");
+            floatLeft[i].mirrorHorizontally();
+        }
+        animationTimer.mark();
     }
     public void act()
     {
@@ -76,6 +85,7 @@ public class AEnemy extends Enemy
                     {
                         direction = "left";
                         move(-1*speed);
+                        setLocation(getX(), getY()+Greenfoot.getRandomNumber(10));
                     }
                 }
                 else if(direction == "left")
@@ -85,6 +95,7 @@ public class AEnemy extends Enemy
                     {
                         direction = "right";
                         move(speed);
+                        setLocation(getX(), getY()+Greenfoot.getRandomNumber(10));
                     }
                 }
             }
@@ -93,6 +104,7 @@ public class AEnemy extends Enemy
         {
             if(world.player.getX() > getX())
             {
+                direction = "right";
                 if(!world.boxAtLocation(getX(), getY()+26)||(!world.boxAtLocation(getX()+26, getY()-25))&&!world.boxAtLocation(getX(), getY()+25))
                 {
                     move(speed+2);
@@ -108,6 +120,7 @@ public class AEnemy extends Enemy
             }
             else if(world.player.getX() < getX())
             {
+                direction = "left";
                 if(!world.boxAtLocation(getX(), getY()+26)||!world.boxAtLocation(getX(), getY()-25)||!world.boxAtLocation(getX(), getY()+25))
                 {
                     move(-1*speed-2);
@@ -150,5 +163,6 @@ public class AEnemy extends Enemy
         }
         iFrames++;
         death();
+        animate(floatRight, floatLeft);
     }
 }

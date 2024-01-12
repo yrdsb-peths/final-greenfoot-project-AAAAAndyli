@@ -58,7 +58,7 @@ public class Enemy extends SmoothMover
             }
         }
         iFrames++;
-        animate();
+        animate(moveRight, moveLeft);
         death();
     }
     public void death()
@@ -83,7 +83,7 @@ public class Enemy extends SmoothMover
         }
     }
     int imageIndex = 0;
-    public void animate()
+    public void animate(GreenfootImage[] right, GreenfootImage[] left)
     {
         if(animationTimer.millisElapsed() < 100)
         {
@@ -92,13 +92,13 @@ public class Enemy extends SmoothMover
         animationTimer.mark();
         if(direction.equals("right"))
         {
-            setImage(moveRight[imageIndex]);     
-            imageIndex = (imageIndex + 1) % moveRight.length;
+            setImage(right[imageIndex]);     
+            imageIndex = (imageIndex + 1) % right.length;
         }
         else
         {
-            setImage(moveLeft[imageIndex]);
-            imageIndex = (imageIndex + 1) % moveLeft.length;        
+            setImage(left[imageIndex]);
+            imageIndex = (imageIndex + 1) % left.length;        
         }
     }
 }
