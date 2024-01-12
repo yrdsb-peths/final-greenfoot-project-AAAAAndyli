@@ -18,6 +18,7 @@ public class End extends Actor
         GameWorld world = (GameWorld) getWorld();
         if(isTouching(Player.class))
         {
+            world.playerHP+=2;
             world.worldNum++;
             world.changeWorld(world.worlds[world.worldNum]);
         }

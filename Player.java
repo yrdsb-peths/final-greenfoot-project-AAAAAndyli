@@ -13,24 +13,54 @@ public class Player extends SmoothMover
     double hMovement = 0;
     double jumpHeight = 0;
     double gravityModifier = 0;
-    int dashable = 0;
+    int dashable = 1000;
     int jumpIndex = 0;
     int fallIndex = 0; 
     int landingIndex = 0;
     int iFrames = 0;
     boolean isGrounded = true;
     boolean peakJump = false;
+    boolean isWalking = false;
+    boolean isDashing = false;
         
     SimpleTimer animationTimer = new SimpleTimer();
     
-    //direction elephant is facing
+    GreenfootImage[] idleRight = new GreenfootImage[2];
+    GreenfootImage[] idleLeft = new GreenfootImage[2];
+    
+    GreenfootImage[] walkRight = new GreenfootImage[5];
+    GreenfootImage[] walkLeft = new GreenfootImage[5];
+    
+    GreenfootImage[] dashRight = new GreenfootImage[3];
+    GreenfootImage[] dashLeft = new GreenfootImage[3];
+    
     String facing = "right";
     /**
      * constructor creates image for animation
      */
     public Player()
     {
-        
+        for(int i = 0; i < 2; i++)
+        {
+            idleRight[i] = new GreenfootImage("images/Chicken/Idle/idle" + i + ".png");
+            idleLeft[i] = new GreenfootImage("images/Chicken/Idle/idle" + i + ".png");
+            idleLeft[i].mirrorHorizontally();
+        }
+        for(int i = 0; i < 5; i++)
+        {
+            walkRight[i] = new GreenfootImage("images/Chicken/walk/walk" + i + ".png");
+            walkLeft[i] = new GreenfootImage("images/Chicken/walk/walk" + i + ".png");
+            walkLeft[i].mirrorHorizontally();
+        }
+        for(int i = 0; i < 3; i++)
+        {
+            dashRight[i] = new GreenfootImage("images/Chicken/dash/dash" + i + ".png");
+            dashLeft[i] = new GreenfootImage("images/Chicken/dash/dash" + i + ".png");
+            dashLeft[i].mirrorHorizontally();
+        }
+        jumpHeight = 0;
+        gravityModifier = 0;
+        hMovement = 0;
     }
     
     /**
@@ -40,13 +70,16 @@ public class Player extends SmoothMover
     {
         touchingEnemy();
         //movement
+        isWalking = false;
         if(Greenfoot.isKeyDown("left"))
         {
+            isWalking = true;
             hMovement -= 1;
             facing = "left";
         }
         if(Greenfoot.isKeyDown("right"))
         {
+            isWalking = true;
             hMovement += 1;
             facing = "right";
         }
@@ -105,6 +138,7 @@ public class Player extends SmoothMover
         }
         dashable++;
         iFrames++;
+        animate();
     }
     /**
      * Moves the elephant vertically, and controls how high the elephant can jump
@@ -129,6 +163,7 @@ public class Player extends SmoothMover
     {
         if(dashable < 20)
         {
+            isDashing = true;
             if(!isTouching(Box.class))
             {
                 jumpHeight = 0;
@@ -158,6 +193,7 @@ public class Player extends SmoothMover
         }
         else if(dashable == 20)
         {
+            isDashing = false;
             jumpHeight = 0;
             gravityModifier = 0;
             hMovement = 0;
@@ -181,6 +217,10 @@ public class Player extends SmoothMover
             setLocation(world.playerSpawnX, world.playerSpawnY);
             world.playerHP--;
         }
+        if(getY() < 0)
+        {
+            setLocation(getX(), 0);
+        }
     }
     public void touchingEnemy()
     {
@@ -201,6 +241,56 @@ public class Player extends SmoothMover
             else
             {
                 hMovement += 3;
+            }
+        }
+    }
+    int walkIndex = 0;
+    int dashIndex = 0;
+    int idleIndex = 0;
+    public void animate()
+    {
+        if(animationTimer.millisElapsed() < 100)
+        {
+            return;
+        }
+        animationTimer.mark();
+        if(isDashing) 
+        {
+            if(facing.equals("right"))
+            {
+                setImage(dashRight[dashIndex]);     
+                dashIndex = (dashIndex + 1) % dashRight.length;
+            }
+            else
+            {
+                setImage(dashLeft[dashIndex]);
+                dashIndex = (dashIndex + 1) % dashLeft.length;        
+            }
+        }
+        else if(isWalking)
+        {
+            if(facing.equals("right"))
+            {
+                setImage(walkRight[walkIndex]);     
+                walkIndex = (walkIndex + 1) % walkRight.length;
+            }
+            else
+            {
+                setImage(walkLeft[walkIndex]);
+                walkIndex = (walkIndex + 1) % walkLeft.length;        
+            }
+        }
+        else
+        {
+            if(facing.equals("right"))
+            {
+                setImage(idleRight[idleIndex]);     
+                idleIndex = (idleIndex + 1) % idleRight.length;
+            }
+            else
+            {
+                setImage(idleLeft[idleIndex]);
+                idleIndex = (idleIndex + 1) % idleLeft.length;        
             }
         }
     }

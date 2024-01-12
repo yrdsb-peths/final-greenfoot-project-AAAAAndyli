@@ -12,10 +12,24 @@ public class Enemy extends SmoothMover
     String direction = "right";
     int iFrames = 0;
     int speed = 3;
+    SimpleTimer animationTimer = new SimpleTimer();
     /**
      * Act - do whatever the Enemy wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    GreenfootImage[] moveRight = new GreenfootImage[7];
+    GreenfootImage[] moveLeft = new GreenfootImage[7];
+    public Enemy()
+    {
+        for(int i = 0; i < 7; i++)
+        {
+            moveRight[i] = new GreenfootImage("images/Enemies/simpleRobot/Sbot" + i + ".png");
+            moveLeft[i] = new GreenfootImage("images/Enemies/simpleRobot/Sbot" + i + ".png");
+            moveLeft[i].mirrorHorizontally();
+        }
+        animationTimer.mark();
+    }
+    
     public void act()
     {
         GameWorld world = (GameWorld) getWorld();
@@ -44,6 +58,7 @@ public class Enemy extends SmoothMover
             }
         }
         iFrames++;
+        animate(moveRight, moveLeft);
         death();
     }
     public void death()
@@ -65,6 +80,25 @@ public class Enemy extends SmoothMover
         {
             world.removeObject(this);
             world.playerHP++;
+        }
+    }
+    int imageIndex = 0;
+    public void animate(GreenfootImage[] right, GreenfootImage[] left)
+    {
+        if(animationTimer.millisElapsed() < 100)
+        {
+            return;
+        }
+        animationTimer.mark();
+        if(direction.equals("right"))
+        {
+            setImage(right[imageIndex]);     
+            imageIndex = (imageIndex + 1) % right.length;
+        }
+        else
+        {
+            setImage(left[imageIndex]);
+            imageIndex = (imageIndex + 1) % left.length;        
         }
     }
 }
