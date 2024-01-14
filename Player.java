@@ -225,23 +225,11 @@ public class Player extends SmoothMover
     public void touchingEnemy()
     {
         GameWorld world = (GameWorld) getWorld();
-        if(isTouching(Enemy.class)&& dashable > 10&& iFrames > 50)
+        if(isTouching(Enemy.class)&& dashable > 20&& iFrames > 50)
         {
             world.playerHP --;
             iFrames = 0;
             hMovement = 0;
-        }
-        else if(isTouching(Enemy.class)&& dashable < 10)
-        {
-            dashable = 0;
-            if(facing == "left")
-            {
-                hMovement -= 3;
-            }
-            else
-            {
-                hMovement += 3;
-            }
         }
     }
     int walkIndex = 0;
