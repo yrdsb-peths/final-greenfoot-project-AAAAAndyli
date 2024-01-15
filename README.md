@@ -1,6 +1,6 @@
-# Final Greenfoot Project
+# Wingspan
 This is the README.md file.
 
-Consider using **Markdown** syntax to format the text in this file. [Markdown basics](https://www.markdownguide.org/getting-started/)
 
-
+# Credits:
+https://www.artstation.com/artwork/elDVqD - BossBar Sprites
