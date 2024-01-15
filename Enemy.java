@@ -33,33 +33,36 @@ public class Enemy extends SmoothMover
     public void act()
     {
         GameWorld world = (GameWorld) getWorld();
-        if(direction == "right")
+        if(!world.paused)
         {
-            if(isTouching(Box.class)&&!world.boxAtLocation(getX()+25, getY()+28)&&world.boxAtLocation(getX()+25, getY()))
+            if(direction == "right")
             {
-                move(speed);
+                if(isTouching(Box.class)&&!world.boxAtLocation(getX()+25, getY()+28)&&world.boxAtLocation(getX()+25, getY()))
+                {
+                    move(speed);
+                }
+                else
+                {
+                    direction = "left";
+                    move(-1*speed);
+                }
             }
-            else
+            else if(direction == "left")
             {
-                direction = "left";
-                move(-1*speed);
+                if(isTouching(Box.class)&&!world.boxAtLocation(getX()-25, getY()+28)&&world.boxAtLocation(getX()-25, getY()))
+                {
+                    move(-1*speed);
+                }
+                else
+                {
+                    direction = "right";
+                    move(speed);
+                }
             }
+            iFrames++;
+            animate(moveRight, moveLeft);
+            death();
         }
-        else if(direction == "left")
-        {
-            if(isTouching(Box.class)&&!world.boxAtLocation(getX()-25, getY()+28)&&world.boxAtLocation(getX()-25, getY()))
-            {
-                move(-1*speed);
-            }
-            else
-            {
-                direction = "right";
-                move(speed);
-            }
-        }
-        iFrames++;
-        animate(moveRight, moveLeft);
-        death();
     }
     public void death()
     {

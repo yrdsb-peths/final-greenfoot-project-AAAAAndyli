@@ -34,135 +34,137 @@ public class AEnemy extends Enemy
     public void act()
     {
         GameWorld world = (GameWorld) getWorld();
-        
-        if(!world.boxAtLocation(getX(), getY()+26))
+        if(!world.paused)
         {
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
-        }
-        if(getY() > 700)
-        {
-            health = -99;
-        }
-        if(state == 0)
-        {
-            if(isGrounded)
+            if(!world.boxAtLocation(getX(), getY()+26))
             {
-                if(direction == "right")
+                isGrounded = true;
+            }
+            else
+            {
+                isGrounded = false;
+            }
+            if(getY() > 700)
+            {
+                health = -99;
+            }
+            if(state == 0)
+            {
+                if(isGrounded)
                 {
-                    if(!world.boxAtLocation(getX()+26, getY()+30))
+                    if(direction == "right")
                     {
-                        move(speed);
+                        if(!world.boxAtLocation(getX()+26, getY()+30))
+                        {
+                            move(speed);
+                        }
+                        else
+                        {
+                            direction = "left";
+                            move(-1*speed);
+                        }
                     }
-                    else
+                    else if(direction == "left")
                     {
-                        direction = "left";
-                        move(-1*speed);
+                        if(!world.boxAtLocation(getX()-26, getY()+30))
+                        {
+                            move(-1*speed);
+                        }
+                        else
+                        {
+                            direction = "right";
+                            move(speed);
+                        }
                     }
                 }
-                else if(direction == "left")
+                else
                 {
-                    if(!world.boxAtLocation(getX()-26, getY()+30))
+                    if(direction == "right")
+                    {
+                        move(speed);
+                        if(isTouching(Box.class)||getX() > 1200)
+                        {
+                            direction = "left";
+                            move(-1*speed);
+                            setLocation(getX(), getY()+Greenfoot.getRandomNumber(10));
+                        }
+                    }
+                    else if(direction == "left")
                     {
                         move(-1*speed);
-                    }
-                    else
-                    {
-                        direction = "right";
-                        move(speed);
+                        if(isTouching(Box.class)||getX() < 0)
+                        {
+                            direction = "right";
+                            move(speed);
+                            setLocation(getX(), getY()+Greenfoot.getRandomNumber(10));
+                        }
                     }
                 }
             }
             else
             {
-                if(direction == "right")
+                if(world.player.getX() > getX())
                 {
-                    move(speed);
-                    if(isTouching(Box.class)||getX() > 1200)
+                    direction = "right";
+                    if(!world.boxAtLocation(getX(), getY()+26)||(!world.boxAtLocation(getX()+26, getY()-25))&&!world.boxAtLocation(getX(), getY()+25))
                     {
-                        direction = "left";
-                        move(-1*speed);
-                        setLocation(getX(), getY()+Greenfoot.getRandomNumber(10));
+                        move(speed+2);
+                    }
+                    if(((world.player.getY() < getY())||(!world.boxAtLocation(getX()+26, getY()-25)))&&world.boxAtLocation(getX(), getY()-25))
+                    {
+                        setLocation(getX()+((speed+2)/2),getY()-3);
+                    }
+                    else if(((world.player.getY() > getY()))&&world.boxAtLocation(getX(), getY()+25))
+                    {
+                        setLocation(getX()+((speed+2)/2),getY()+3);
                     }
                 }
-                else if(direction == "left")
+                else if(world.player.getX() < getX())
                 {
-                    move(-1*speed);
-                    if(isTouching(Box.class)||getX() < 0)
+                    direction = "left";
+                    if(!world.boxAtLocation(getX(), getY()+26)||!world.boxAtLocation(getX(), getY()-25)||!world.boxAtLocation(getX(), getY()+25))
                     {
-                        direction = "right";
-                        move(speed);
-                        setLocation(getX(), getY()+Greenfoot.getRandomNumber(10));
+                        move(-1*speed-2);
+                    }
+                    if(((world.player.getY() < getY())||(!world.boxAtLocation(getX()-26, getY()-25)))&&world.boxAtLocation(getX(), getY()-25))
+                    {
+                        setLocation(getX()+((-1*speed-2)/2),getY()-3);
+                    }
+                    else if(((world.player.getY() > getY()))&&world.boxAtLocation(getX(), getY()+25))
+                    {
+                        setLocation(getX()+((-1*speed-2)/2),getY()+3);
                     }
                 }
             }
-        }
-        else
-        {
-            if(world.player.getX() > getX())
+            if(300>Math.sqrt((world.player.getY() - getY()) * (world.player.getY() - getY()) + (world.player.getX() - getX()) * (world.player.getX() - getX())))
+            {
+                state = 1;
+            }
+            else
+            {
+                state = 0;
+            }
+            if(!world.boxAtLocation(getX()-26, getY()))
             {
                 direction = "right";
-                if(!world.boxAtLocation(getX(), getY()+26)||(!world.boxAtLocation(getX()+26, getY()-25))&&!world.boxAtLocation(getX(), getY()+25))
-                {
-                    move(speed+2);
-                }
-                if(((world.player.getY() < getY())||(!world.boxAtLocation(getX()+26, getY()-25)))&&world.boxAtLocation(getX(), getY()-25))
-                {
-                    setLocation(getX()+((speed+2)/2),getY()-3);
-                }
-                else if(((world.player.getY() > getY()))&&world.boxAtLocation(getX(), getY()+25))
-                {
-                    setLocation(getX()+((speed+2)/2),getY()+3);
-                }
+                move(5);
             }
-            else if(world.player.getX() < getX())
+            else if(!world.boxAtLocation(getX()+26, getY()))
             {
                 direction = "left";
-                if(!world.boxAtLocation(getX(), getY()+26)||!world.boxAtLocation(getX(), getY()-25)||!world.boxAtLocation(getX(), getY()+25))
-                {
-                    move(-1*speed-2);
-                }
-                if(((world.player.getY() < getY())||(!world.boxAtLocation(getX()-26, getY()-25)))&&world.boxAtLocation(getX(), getY()-25))
-                {
-                    setLocation(getX()+((-1*speed-2)/2),getY()-3);
-                }
-                else if(((world.player.getY() > getY()))&&world.boxAtLocation(getX(), getY()+25))
-                {
-                    setLocation(getX()+((-1*speed-2)/2),getY()+3);
-                }
+                move(-5);
             }
+            if(!world.boxAtLocation(getX(), getY()-25))
+            {
+                setLocation(getX(),getY()+3);
+            }
+            if(!world.boxAtLocation(getX(), getY()+25))
+            {
+                setLocation(getX(),getY()-3);
+            }
+            iFrames++;
+            death();
+            animate(floatRight, floatLeft);
         }
-        if(300>Math.sqrt((world.player.getY() - getY()) * (world.player.getY() - getY()) + (world.player.getX() - getX()) * (world.player.getX() - getX())))
-        {
-            state = 1;
-        }
-        else
-        {
-            state = 0;
-        }
-        if(!world.boxAtLocation(getX()-26, getY()))
-        {
-            direction = "right";
-            move(5);
-        }
-        else if(!world.boxAtLocation(getX()+26, getY()))
-        {
-            direction = "left";
-            move(-5);
-        }
-        if(!world.boxAtLocation(getX(), getY()-25))
-        {
-            setLocation(getX(),getY()+3);
-        }
-        if(!world.boxAtLocation(getX(), getY()+25))
-        {
-            setLocation(getX(),getY()-3);
-        }
-        iFrames++;
-        death();
-        animate(floatRight, floatLeft);
     }
 }

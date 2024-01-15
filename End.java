@@ -16,11 +16,14 @@ public class End extends Actor
     public void act()
     {
         GameWorld world = (GameWorld) getWorld();
-        if(isTouching(Player.class))
+        if(!world.paused)
         {
-            world.playerHP+=2;
-            world.worldNum++;
-            world.changeWorld(world.worlds[world.worldNum]);
+            if(isTouching(Player.class))
+            {
+                world.playerHP+=2;
+                world.worldNum++;
+                world.changeWorld(world.worlds[world.worldNum]);
+            }
         }
     }
 }

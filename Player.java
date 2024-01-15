@@ -68,77 +68,81 @@ public class Player extends SmoothMover
      */
     public void act()
     {
-        touchingEnemy();
-        //movement
-        isWalking = false;
-        if(Greenfoot.isKeyDown("left"))
+        GameWorld world = (GameWorld) getWorld();
+        if(!world.paused)
         {
-            isWalking = true;
-            hMovement -= 1;
-            facing = "left";
-        }
-        if(Greenfoot.isKeyDown("right"))
-        {
-            isWalking = true;
-            hMovement += 1;
-            facing = "right";
-        }
-        if(Greenfoot.isKeyDown("up"))
-        {
-            isGrounded = false;
-            jump();
-            gravityModifier-=0.05;
-        }
-        
-        //jump code
-        if((peakJump&&!isGrounded)&&gravityModifier < 2)
-        {
-            gravityModifier+=0.7;
-        }
-        if(jumpHeight > 10)
-        {
-            gravityModifier = 0.3;
-        }
-        if(Greenfoot.isKeyDown("space")||dashable < 21)
-        {
-            dash();
-        }
-        setLocation(getX()+(int)hMovement, getY()+jumpHeight);
-        bounding();
-        if(!isGrounded)
-        {
-            if(!Greenfoot.isKeyDown("up")&&!peakJump)
+            touchingEnemy();
+            //movement
+            isWalking = false;
+            if(Greenfoot.isKeyDown("left"))
             {
-                peakJump = true;
-                gravityModifier = 0;
-                jumpHeight = 0;
-                jumpHeight += gravityModifier;
+                isWalking = true;
+                hMovement -= 1;
+                facing = "left";
             }
-            else
+            if(Greenfoot.isKeyDown("right"))
             {
-                jumpHeight += gravityModifier;
+                isWalking = true;
+                hMovement += 1;
+                facing = "right";
             }
+            if(Greenfoot.isKeyDown("up"))
+            {
+                isGrounded = false;
+                jump();
+                gravityModifier-=0.05;
+            }
+            
+            //jump code
+            if((peakJump&&!isGrounded)&&gravityModifier < 2)
+            {
+                gravityModifier+=0.7;
+            }
+            if(jumpHeight > 10)
+            {
+                gravityModifier = 0.3;
+            }
+            if(Greenfoot.isKeyDown("space")||dashable < 21)
+            {
+                dash();
+            }
+            setLocation(getX()+(int)hMovement, getY()+jumpHeight);
+            bounding();
+            if(!isGrounded)
+            {
+                if(!Greenfoot.isKeyDown("up")&&!peakJump)
+                {
+                    peakJump = true;
+                    gravityModifier = 0;
+                    jumpHeight = 0;
+                    jumpHeight += gravityModifier;
+                }
+                else
+                {
+                    jumpHeight += gravityModifier;
+                }
+            }
+            isGrounded = isTouching(Box.class);
+            if(hMovement < 0)
+            {
+                hMovement+=0.8;
+            }
+            else if (hMovement > 0)
+            {
+                hMovement-=0.8;
+            }
+            if(hMovement < -10&&dashable > 50)
+            {
+                hMovement=-10;
+            }
+            else if (hMovement > 10&&dashable > 50)
+            {
+                hMovement=10;
+            }
+            dashable++;
+            iFrames++;
+            animate();
         }
-        isGrounded = isTouching(Box.class);
-        if(hMovement < 0)
-        {
-            hMovement+=0.8;
-        }
-        else if (hMovement > 0)
-        {
-            hMovement-=0.8;
-        }
-        if(hMovement < -10&&dashable > 50)
-        {
-            hMovement=-10;
-        }
-        else if (hMovement > 10&&dashable > 50)
-        {
-            hMovement=10;
-        }
-        dashable++;
-        iFrames++;
-        animate();
     }
     /**
      * Moves the elephant vertically, and controls how high the elephant can jump
@@ -227,6 +231,10 @@ public class Player extends SmoothMover
         GameWorld world = (GameWorld) getWorld();
         if(!getWorld().getObjects(Boss.class).isEmpty()&&world.voidBird.isTouchingPlayer(false)&& dashable > 20&& iFrames > 50)
         {
+            if(world.voidBird.bHP != 9)
+            {
+                world.voidBird.bHP++;
+            }
             if(world.voidBird.bHP != 9)
             {
                 world.voidBird.bHP++;
