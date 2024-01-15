@@ -347,7 +347,7 @@ public class GameWorld extends World
         {0, 1, 0, 1, 0, 0, 1, 5, 5, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, },
         };
     public int[][] bossArena = {
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, },
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 6, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, },
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, },
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, },
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, },
@@ -363,6 +363,8 @@ public class GameWorld extends World
     
     public int[][][] worlds = {tuworld1, tuworld2, tuworld3, tuworld4, world2, platformer, platformer2, platformer3, platformer4, level8, level9, level10, level11, level12, level13};
     Player player = new Player();
+    Boss voidBird = new Boss();
+    Bosshealth bossHP = new Bosshealth();
     /**
      * Constructor for objects of class GameWorld1.
      * 
@@ -371,7 +373,7 @@ public class GameWorld extends World
     {    
         super(1200, 600, 1, false); 
         //prepare();
-        buildWorld(tuworld1);
+        buildWorld(bossArena);
         HP = new Label(0,40);
         addObject(HP, 50, 30);
         timerLabel = new Label(0,40);
@@ -415,6 +417,11 @@ public class GameWorld extends World
                 {
                     End end = new End();
                     addObject(end,i*50+25,j*50+26);
+                }
+                else if(world[j][i] == 6)
+                {
+                    addObject(voidBird,i*50+25,-500);
+                    addObject(bossHP, 600, 600);
                 }
             }
         }
