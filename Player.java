@@ -182,7 +182,7 @@ public class Player extends SmoothMover
                 isGrounded = false;
             }
         }
-        if(dashable > 100)
+        if(dashable > 50)
         {
             if(!isTouching(Box.class))
             {

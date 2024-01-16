@@ -45,7 +45,7 @@ public class Bosshealth extends Actor
                 }
                 if(world.voidBird.bHP >=0)
                 {
-                    setImage(healthDisplay[world.voidBird.bHP/2]);
+                    setImage(healthDisplay[world.voidBird.bHP/3]);
                 }
                 else if(deathTime < 200)
                 {

@@ -58,11 +58,18 @@ public class Button extends Actor
             setImage(button[2]);
             if(buttonType==0)
             {
-                GameWorld world = new GameWorld();
-                Greenfoot.setWorld(world);
+                GameWorld newWorld = new GameWorld();
+                Greenfoot.setWorld(newWorld);
             }
             else if(buttonType==2)
             {
+                if(getWorld().getClass().getName()=="GameWorld")
+                {
+                    GameWorld world = (GameWorld) getWorld();
+                    world.calm.stop();
+                    world.combat.stop();
+                    world.boss.stop();
+                }
                 Mainmenu m = new Mainmenu();
                 Greenfoot.setWorld(m);
             }
