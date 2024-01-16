@@ -12,7 +12,7 @@ public class Boss extends SmoothMover
      * Act - do whatever the Boss wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    int bHP = 9;
+    int bHP = 18;
     SimpleTimer animationTimer = new SimpleTimer();
     String direction = "right";
     boolean damaging = false;
@@ -47,6 +47,12 @@ public class Boss extends SmoothMover
     
     GreenfootImage[] deathR = new GreenfootImage[11];
     GreenfootImage[] deathL = new GreenfootImage[11];
+    
+    GreenfootSound dash = new GreenfootSound("BossDash.wav");
+    GreenfootSound blade = new GreenfootSound("BossSword.wav");
+    GreenfootSound stomp = new GreenfootSound("BossStomp.wav");
+    GreenfootSound landI = new GreenfootSound("Land2.wav");
+    GreenfootSound landS = new GreenfootSound("Land.wav");
     
     public Boss()
     {
@@ -168,6 +174,7 @@ public class Boss extends SmoothMover
     }
     int fallIndex = 0;
     int landIndex = 0;
+    
     public void introFall()
     {
         GameWorld world = (GameWorld) getWorld();
@@ -184,6 +191,7 @@ public class Boss extends SmoothMover
         }
         else if(landIndex < land.length)
         {
+            landI.play();
             setLocation(getX(),600-75);
             animationTimer.mark();
             setImage(land[landIndex]);     
@@ -196,7 +204,6 @@ public class Boss extends SmoothMover
             attack = false;
         }
     }
-    
     public void fall()
     {
         GameWorld world = (GameWorld) getWorld();
@@ -221,6 +228,10 @@ public class Boss extends SmoothMover
         }
         else if(landIndex < land.length)
         {
+            if(landIndex == 0)
+            {
+                landS.play();
+            }
             fallDist = 0;
             damaging = false;
             animationTimer.mark();
@@ -253,15 +264,16 @@ public class Boss extends SmoothMover
                 setImage(dashRP[dashPIndex]);     
                 dashPIndex++;
             }   
-            else if(dashable < 10)
+            else if(dashable < 5)
             {
+                dash.play();
                 damaging = true;
                 setImage(dashR[fallIndex]);   
                 dashIndex = (dashIndex + 1) % dashR.length;
                 dashable++;
-                move(25);
+                move(50);
             }
-            if(dashable >= 10)
+            if(dashable >= 5)
             {
                 damaging = false;
                 dashable = 0;
@@ -278,15 +290,16 @@ public class Boss extends SmoothMover
                 setImage(dashLP[dashPIndex]);     
                 dashPIndex++;
             }   
-            else if(dashable < 10)
+            else if(dashable < 5)
             {
+                dash.play();
                 damaging = true;
                 setImage(dashL[fallIndex]);   
                 dashIndex = (dashIndex + 1) % dashL.length;
                 dashable++;
-                move(-25);
+                move(-50);
             }
-            if(dashable >= 10)
+            if(dashable >= 5)
             {
                 damaging = false;
                 dashable = 0;
@@ -320,8 +333,9 @@ public class Boss extends SmoothMover
                 animationTimer.mark();
                 turnTowards(world.player.getX(), world.player.getY());
             }
-            else if(dashable < 20)
+            else if(dashable < 30)
             {
+                blade.play();
                 move(20);
                 dashable++;
             }
@@ -353,6 +367,7 @@ public class Boss extends SmoothMover
             }
             else if(dashable < 30)
             {
+                blade.play();
                 dashable++;
                 move(20);
             }
@@ -383,6 +398,10 @@ public class Boss extends SmoothMover
                 damaging = true;
                 setImage(stompR[stompIndex]);   
                 stompIndex = (stompIndex + 1) % stompR.length;
+                if(stompIndex == 7)
+                {
+                    stomp.play();
+                }
             }
             else
             {
@@ -399,6 +418,10 @@ public class Boss extends SmoothMover
                 damaging = true;
                 setImage(stompL[stompIndex]);   
                 stompIndex = (stompIndex + 1) % stompR.length;
+                if(stompIndex == 7)
+                {
+                    stomp.play();
+                }
             }
             else
             {

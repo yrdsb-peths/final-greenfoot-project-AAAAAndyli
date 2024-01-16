@@ -34,6 +34,9 @@ public class Player extends SmoothMover
     GreenfootImage[] dashRight = new GreenfootImage[3];
     GreenfootImage[] dashLeft = new GreenfootImage[3];
     
+    GreenfootSound dash = new GreenfootSound("Dash.wav");
+    GreenfootSound bossDamage = new GreenfootSound("BossHit.wav");
+    
     String facing = "right";
     /**
      * constructor creates image for animation
@@ -69,6 +72,8 @@ public class Player extends SmoothMover
     public void act()
     {
         GameWorld world = (GameWorld) getWorld();
+
+        dash.setVolume(world.maxV);
         if(!world.paused)
         {
             touchingEnemy();
@@ -167,6 +172,7 @@ public class Player extends SmoothMover
     {
         if(dashable < 20)
         {
+            dash.play();
             isDashing = true;
             if(!isTouching(Box.class))
             {
@@ -221,9 +227,9 @@ public class Player extends SmoothMover
             setLocation(world.playerSpawnX, world.playerSpawnY);
             world.playerHP--;
         }
-        if(getY() < 0)
+        if(getY() < 1)
         {
-            setLocation(getX(), 0);
+            setLocation(getX(), 2);
         }
     }
     public void touchingEnemy()
@@ -231,10 +237,7 @@ public class Player extends SmoothMover
         GameWorld world = (GameWorld) getWorld();
         if(!getWorld().getObjects(Boss.class).isEmpty()&&world.voidBird.isTouchingPlayer(false)&& dashable > 20&& iFrames > 50)
         {
-            if(world.voidBird.bHP != 9)
-            {
-                world.voidBird.bHP++;
-            }
+
             if(world.voidBird.bHP != 9)
             {
                 world.voidBird.bHP++;
@@ -245,6 +248,7 @@ public class Player extends SmoothMover
         }
         else if(!getWorld().getObjects(Boss.class).isEmpty()&&world.voidBird.isTouchingPlayer(true)&& dashable <= 20 &&world.voidBird.iframeB > 25)
         {
+            bossDamage.play();
             world.voidBird.bHP--;
             world.voidBird.iframeB=0;
         }

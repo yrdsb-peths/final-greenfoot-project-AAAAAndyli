@@ -16,7 +16,8 @@ public class GameWorld extends World
     int calmOrCombat = 1;
     int calmV = 0;
     int combatV = 0;
-    int maxV=75;
+    public int maxV=75;
+    int bossV = maxV;
     Label HP;
     public int playerSpawnX = 0;
     public int playerSpawnY = 0;
@@ -191,22 +192,22 @@ public class GameWorld extends World
         {0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, },
         {0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 4, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, },
         {0, 1, 1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, },
-        {0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, },
-        {0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0, },
-        {0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, },
+        {0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, },
+        {0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, },
+        {0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, },
         {0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, },
-        {0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, },
-        {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, },
+        {0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+        {0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 1, },
         {0, 0, 0, 5, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 1, },
         {1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, },
         };
     public int[][] level9 = {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, },
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 1, 5, 0, 0, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 5, 0, 0, 0, 0, 0, 0, 0, },
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, },
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, },
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 4, 0, 0, 1, 1, },
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, },
+        {0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, },
         {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, },
         {0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, },
         {1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, },
@@ -368,8 +369,22 @@ public class GameWorld extends World
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 1, },
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, },
         };
+    public int[][] win = {
+        {0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, },
+        {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, },
+        {0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, },
+        {0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, },
+        {0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+        {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, },
+        };
     
-    public int[][][] worlds = {tuworld1, tuworld2, tuworld3, tuworld4, world2, platformer, platformer2, platformer3, platformer4, level8, level9, level10, level11, level12, level13, level14, level15, level16, level17, level18, level19, bossArena};
+    public int[][][] worlds = {tuworld1, tuworld2, tuworld3, tuworld4, world2, platformer, platformer2, platformer3, platformer4, level8, level9, level10, level11, level12, level13, level14, level15, level16, level17, level18, level19, bossArena, win};
     Player player = new Player();
     Boss voidBird = new Boss();
     Bosshealth bossHP = new Bosshealth();
@@ -395,12 +410,19 @@ public class GameWorld extends World
         addObject(dashI, 50, 120);
         calm.setVolume(calmV);
         combat.setVolume(combatV);
+        boss.setVolume(maxV);
         calm.playLoop();
         combat.playLoop();
     }
 
     public void act()
     {
+        if(playerHP < 0)
+        {
+            Gameover gameOver = new Gameover();
+            Greenfoot.setWorld(gameOver);
+        }
+        
         Greenfoot. setSpeed(51);
         if(playerHP > 30)
         {
@@ -419,43 +441,69 @@ public class GameWorld extends World
             paused = true;   
             Button pause = new Button(1);
             addObject(pause,450,600);
+            Button menu = new Button(2);
+            addObject(menu,750,600);
         }
         if(!paused)
         {
+            removeObjects(getObjects(Button.class));
             runActCounter();
         }
         
+    
         //music related code
-        if((getObjects(Enemy.class).size() != 0|| getObjects(AEnemy.class).size() != 0)&&calmOrCombat<maxV)
-        {
-            calmOrCombat++;
-        }
-        else if(calmOrCombat!=0)
-        {
-            calmOrCombat--;
-        }
-        if(calmOrCombat > maxV)
-        {
-            calmOrCombat = maxV;
-        }
-        if(calmV > maxV-calmOrCombat)
-        {
-            calmV--;
-        }
-        else if(calmV < maxV-calmOrCombat)
-        {
-            calmV++;
-        }
-        if(combatV > calmOrCombat)
-        {
-            combatV--;
-        }
-        else if(combatV < calmOrCombat)
-        {
-            combatV++;
-        }
         calm.setVolume(calmV);
         combat.setVolume(combatV);
+        boss.setVolume(maxV);
+        
+        if(voidBird.introFinished)
+        {
+            boss.playLoop();
+            if(voidBird.bHP < 0)
+            {
+                boss.setVolume(bossV--);
+            }
+        }
+        else
+        {
+            if((getObjects(Enemy.class).size() != 0|| getObjects(AEnemy.class).size() != 0)&&calmOrCombat<maxV)
+            {
+                calmOrCombat++;
+            }
+            else if(calmOrCombat!=0)
+            {
+                calmOrCombat--;
+            }
+            if(calmOrCombat > maxV)
+            {
+                calmOrCombat = maxV;
+            }
+            if(calmV > maxV-calmOrCombat)
+            {
+                calmV--;
+            }
+            else if(calmV < maxV-calmOrCombat)
+            {
+                calmV+=2;
+            }
+            if(getObjects(Boss.class).size() != 0)
+            {
+                calmV--;
+            }
+            if(combatV > calmOrCombat)
+            {
+                combatV--;
+            }
+            else if(combatV < calmOrCombat)
+            {
+                combatV++;
+            }
+            if(getObjects(Boss.class).size() != 0)
+            {
+                combatV-=2;
+            }
+        }
+
         if((Greenfoot.isKeyDown("=")||Greenfoot.isKeyDown("+"))&&maxV < 100)
         {
             maxV++;
