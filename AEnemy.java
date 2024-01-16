@@ -20,6 +20,7 @@ public class AEnemy extends Enemy
     double jumpHeight = 0;
     GreenfootImage[] floatRight = new GreenfootImage[5];
     GreenfootImage[] floatLeft = new GreenfootImage[5];
+    GreenfootSound death = new GreenfootSound("HunterDeath.wav");
     public AEnemy()
     {
         speed = 2;
@@ -34,135 +35,182 @@ public class AEnemy extends Enemy
     public void act()
     {
         GameWorld world = (GameWorld) getWorld();
-        
-        if(!world.boxAtLocation(getX(), getY()+26))
+        Explosion.setVolume(world.maxV);
+        metalHit.setVolume(world.maxV);
+        death.setVolume(world.maxV);
+        if(!world.paused)
         {
-            isGrounded = true;
-        }
-        else
-        {
-            isGrounded = false;
-        }
-        if(getY() > 700)
-        {
-            health = -99;
-        }
-        if(state == 0)
-        {
-            if(isGrounded)
+            if(health > 0)
             {
-                if(direction == "right")
+                if(!world.boxAtLocation(getX(), getY()+26))
                 {
-                    if(!world.boxAtLocation(getX()+26, getY()+30))
+                    isGrounded = true;
+                }
+                else
+                {
+                    isGrounded = false;
+                }
+                if(getY() > 700)
+                {
+                    health = -99;
+                }
+                if(state == 0)
+                {
+                    if(isGrounded)
                     {
-                        move(speed);
+                        if(direction == "right")
+                        {
+                            if(!world.boxAtLocation(getX()+26, getY()+30))
+                            {
+                                move(speed);
+                            }
+                            else
+                            {
+                                direction = "left";
+                                move(-1*speed);
+                            }
+                        }
+                        else if(direction == "left")
+                        {
+                            if(!world.boxAtLocation(getX()-26, getY()+30))
+                            {
+                                move(-1*speed);
+                            }
+                            else
+                            {
+                                direction = "right";
+                                move(speed);
+                            }
+                        }
                     }
                     else
                     {
-                        direction = "left";
-                        move(-1*speed);
+                        if(direction == "right")
+                        {
+                            move(speed);
+                            if(isTouching(Box.class)||getX() > 1200)
+                            {
+                                direction = "left";
+                                move(-1*speed);
+                                setLocation(getX(), getY()+Greenfoot.getRandomNumber(10));
+                            }
+                        }
+                        else if(direction == "left")
+                        {
+                            move(-1*speed);
+                            if(isTouching(Box.class)||getX() < 0)
+                            {
+                                direction = "right";
+                                move(speed);
+                                setLocation(getX(), getY()+Greenfoot.getRandomNumber(10));
+                            }
+                        }
                     }
                 }
-                else if(direction == "left")
+                else
                 {
-                    if(!world.boxAtLocation(getX()-26, getY()+30))
-                    {
-                        move(-1*speed);
-                    }
-                    else
+                    if(world.player.getX() > getX())
                     {
                         direction = "right";
-                        move(speed);
+                        if(!world.boxAtLocation(getX(), getY()+26)||(!world.boxAtLocation(getX()+26, getY()-25))&&!world.boxAtLocation(getX(), getY()+25))
+                        {
+                            move(speed+2);
+                        }
+                        if(((world.player.getY() < getY())||(!world.boxAtLocation(getX()+26, getY()-25)))&&world.boxAtLocation(getX(), getY()-25))
+                        {
+                            setLocation(getX()+((speed+2)/2),getY()-3);
+                        }
+                        else if(((world.player.getY() > getY()))&&world.boxAtLocation(getX(), getY()+25))
+                        {
+                            setLocation(getX()+((speed+2)/2),getY()+3);
+                        }
+                    }
+                    else if(world.player.getX() < getX())
+                    {
+                        direction = "left";
+                        if(!world.boxAtLocation(getX(), getY()+26)||!world.boxAtLocation(getX(), getY()-25)||!world.boxAtLocation(getX(), getY()+25))
+                        {
+                            move(-1*speed-2);
+                        }
+                        if(((world.player.getY() < getY())||(!world.boxAtLocation(getX()-26, getY()-25)))&&world.boxAtLocation(getX(), getY()-25))
+                        {
+                            setLocation(getX()+((-1*speed-2)/2),getY()-3);
+                        }
+                        else if(((world.player.getY() > getY()))&&world.boxAtLocation(getX(), getY()+25))
+                        {
+                            setLocation(getX()+((-1*speed-2)/2),getY()+3);
+                        }
                     }
                 }
+                if(300>Math.sqrt((world.player.getY() - getY()) * (world.player.getY() - getY()) + (world.player.getX() - getX()) * (world.player.getX() - getX())))
+                {
+                    state = 1;
+                }
+                else
+                {
+                    state = 0;
+                }
+                if(!world.boxAtLocation(getX()-26, getY()))
+                {
+                    direction = "right";
+                    move(5);
+                }
+                else if(!world.boxAtLocation(getX()+26, getY()))
+                {
+                    direction = "left";
+                    move(-5);
+                }
+                if(!world.boxAtLocation(getX(), getY()-25))
+                {
+                    setLocation(getX(),getY()+3);
+                }
+                if(!world.boxAtLocation(getX(), getY()+25))
+                {
+                    setLocation(getX(),getY()-3);
+                }
+                iFrames++;
+                death();
+                death = new GreenfootSound("HunterDeath.wav");
+                animate(floatRight, floatLeft);
             }
             else
             {
-                if(direction == "right")
-                {
-                    move(speed);
-                    if(isTouching(Box.class)||getX() > 1200)
-                    {
-                        direction = "left";
-                        move(-1*speed);
-                        setLocation(getX(), getY()+Greenfoot.getRandomNumber(10));
-                    }
-                }
-                else if(direction == "left")
-                {
-                    move(-1*speed);
-                    if(isTouching(Box.class)||getX() < 0)
-                    {
-                        direction = "right";
-                        move(speed);
-                        setLocation(getX(), getY()+Greenfoot.getRandomNumber(10));
-                    }
-                }
+                death();
             }
         }
-        else
+    }
+    public void death()
+    {
+        GameWorld world = (GameWorld) getWorld();
+        if(isTouching(Player.class)&& world.player.dashable < 20&&iFrames>10)
         {
-            if(world.player.getX() > getX())
+            health-=10;
+            metalHit.play();  
+            iFrames = 0;
+        }
+        if(health <=0)
+        {
+            if(deathTime < 100)
             {
-                direction = "right";
-                if(!world.boxAtLocation(getX(), getY()+26)||(!world.boxAtLocation(getX()+26, getY()-25))&&!world.boxAtLocation(getX(), getY()+25))
-                {
-                    move(speed+2);
-                }
-                if(((world.player.getY() < getY())||(!world.boxAtLocation(getX()+26, getY()-25)))&&world.boxAtLocation(getX(), getY()-25))
-                {
-                    setLocation(getX()+((speed+2)/2),getY()-3);
-                }
-                else if(((world.player.getY() > getY()))&&world.boxAtLocation(getX(), getY()+25))
-                {
-                    setLocation(getX()+((speed+2)/2),getY()+3);
-                }
+                death.play();
+                setLocation(getX()+Greenfoot.getRandomNumber(10)-5, getY()+Greenfoot.getRandomNumber(10)-5);
+                deathTime++;
             }
-            else if(world.player.getX() < getX())
+            else if(animationTimer.millisElapsed() < 99)
             {
-                direction = "left";
-                if(!world.boxAtLocation(getX(), getY()+26)||!world.boxAtLocation(getX(), getY()-25)||!world.boxAtLocation(getX(), getY()+25))
-                {
-                    move(-1*speed-2);
-                }
-                if(((world.player.getY() < getY())||(!world.boxAtLocation(getX()-26, getY()-25)))&&world.boxAtLocation(getX(), getY()-25))
-                {
-                    setLocation(getX()+((-1*speed-2)/2),getY()-3);
-                }
-                else if(((world.player.getY() > getY()))&&world.boxAtLocation(getX(), getY()+25))
-                {
-                    setLocation(getX()+((-1*speed-2)/2),getY()+3);
-                }
+                return;
+            }
+            else if(deathIndex !=11)
+            {
+                Explosion.play();
+                setImage(explosion[deathIndex]);     
+                deathIndex = (deathIndex + 1) % explosion.length;
+            }
+            else
+            {
+                world.removeObject(this);
+                world.playerHP++;
             }
         }
-        if(300>Math.sqrt((world.player.getY() - getY()) * (world.player.getY() - getY()) + (world.player.getX() - getX()) * (world.player.getX() - getX())))
-        {
-            state = 1;
-        }
-        else
-        {
-            state = 0;
-        }
-        if(!world.boxAtLocation(getX()-26, getY()))
-        {
-            direction = "right";
-            move(5);
-        }
-        else if(!world.boxAtLocation(getX()+26, getY()))
-        {
-            direction = "left";
-            move(-5);
-        }
-        if(!world.boxAtLocation(getX(), getY()-25))
-        {
-            setLocation(getX(),getY()+3);
-        }
-        if(!world.boxAtLocation(getX(), getY()+25))
-        {
-            setLocation(getX(),getY()-3);
-        }
-        iFrames++;
-        death();
-        animate(floatRight, floatLeft);
     }
 }

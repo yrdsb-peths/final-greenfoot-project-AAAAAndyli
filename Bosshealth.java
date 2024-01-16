@@ -13,6 +13,7 @@ public class Bosshealth extends Actor
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     GreenfootImage[] healthDisplay = new GreenfootImage[10];
+    int deathTime = 0;
     int speed = 15;
     int slowDown = 0;
     public Bosshealth()
@@ -25,22 +26,37 @@ public class Bosshealth extends Actor
     public void act()
     {
         GameWorld world = (GameWorld) getWorld();
-        if(world.voidBird.introFinished)
+        if(!world.paused)
         {
-            if(getY() > 50)
+            if(world.voidBird.introFinished)
             {
-                setLocation(getX(), getY()-speed);
-                if(slowDown == 5)
+                if(getY() > 50)
                 {
-                    slowDown=0;
-                    speed--;
+                    setLocation(getX(), getY()-speed);
+                    if(slowDown == 5)
+                    {
+                        slowDown=0;
+                        speed--;
+                    }
+                    else
+                    {
+                        slowDown++;
+                    }
+                }
+                if(world.voidBird.bHP >=0)
+                {
+                    setImage(healthDisplay[world.voidBird.bHP/2]);
+                }
+                else if(deathTime < 200)
+                {
+                    setLocation(600+Greenfoot.getRandomNumber(25), 50+Greenfoot.getRandomNumber(25));
+                    deathTime++;
                 }
                 else
                 {
-                    slowDown++;
+                    world.removeObject(this);
                 }
             }
-            setImage(healthDisplay[world.voidBird.bHP]);
         }
     }
 }

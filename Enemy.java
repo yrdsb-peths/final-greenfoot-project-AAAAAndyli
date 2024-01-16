@@ -19,6 +19,10 @@ public class Enemy extends SmoothMover
      */
     GreenfootImage[] moveRight = new GreenfootImage[7];
     GreenfootImage[] moveLeft = new GreenfootImage[7];
+    GreenfootImage[] explosion = new GreenfootImage[12];
+    GreenfootSound Explosion = new GreenfootSound("Explosion.wav");
+    GreenfootSound metalHit = new GreenfootSound("RHit.wav");
+    GreenfootSound death = new GreenfootSound("DroneDeath.wav");
     public Enemy()
     {
         for(int i = 0; i < 7; i++)
@@ -27,59 +31,89 @@ public class Enemy extends SmoothMover
             moveLeft[i] = new GreenfootImage("images/Enemies/simpleRobot/Sbot" + i + ".png");
             moveLeft[i].mirrorHorizontally();
         }
+        for(int i = 0; i < 11; i++)
+        {
+            explosion[i] = new GreenfootImage("images/explosion/boom" + i + ".png");
+            explosion[i].scale(100, 100);
+        }
         animationTimer.mark();
     }
     
     public void act()
     {
         GameWorld world = (GameWorld) getWorld();
-        if(direction == "right")
+        Explosion.setVolume(world.maxV);
+        metalHit.setVolume(world.maxV);
+        death.setVolume(world.maxV);
+        if(!world.paused)
         {
-            if(isTouching(Box.class)&&!world.boxAtLocation(getX()+25, getY()+28)&&world.boxAtLocation(getX()+25, getY()))
+            if(health > 0)
             {
-                move(speed);
+                if(direction == "right")
+                {
+                    if(isTouching(Box.class)&&!world.boxAtLocation(getX()+25, getY()+28)&&world.boxAtLocation(getX()+25, getY()))
+                    {
+                        move(speed);
+                    }
+                    else
+                    {
+                        direction = "left";
+                        move(-1*speed);
+                    }
+                }
+                else if(direction == "left")
+                {
+                    if(isTouching(Box.class)&&!world.boxAtLocation(getX()-25, getY()+28)&&world.boxAtLocation(getX()-25, getY()))
+                    {
+                        move(-1*speed);
+                    }
+                    else
+                    {
+                        direction = "right";
+                        move(speed);
+                    }
+                }
+                iFrames++;
+                animate(moveRight, moveLeft);
+                death();
             }
-            else
-            {
-                direction = "left";
-                move(-1*speed);
-            }
+            death();
         }
-        else if(direction == "left")
-        {
-            if(isTouching(Box.class)&&!world.boxAtLocation(getX()-25, getY()+28)&&world.boxAtLocation(getX()-25, getY()))
-            {
-                move(-1*speed);
-            }
-            else
-            {
-                direction = "right";
-                move(speed);
-            }
-        }
-        iFrames++;
-        animate(moveRight, moveLeft);
-        death();
     }
+    int deathTime;
+    int deathIndex;
     public void death()
     {
         GameWorld world = (GameWorld) getWorld();
-        if(isTouching(Player.class)&& world.player.dashable < 10&&iFrames>10)
+        if(isTouching(Player.class)&& world.player.dashable < 20&&iFrames>10)
         {
-            if(world.player.hMovement>0)
-            {
-                health-=(int)world.player.hMovement;
-            }
-            else
-            {
-                health+=(int)world.player.hMovement;
-            }
+            health-=10;
+            metalHit.play();  
             iFrames = 0;
         }
         if(health <=0)
         {
-            world.removeObject(this);
-            world.playerHP++;
+            if(deathTime < 50)
+            {
+                death.play();
+                setLocation(getX()+Greenfoot.getRandomNumber(10)-5, getY()+Greenfoot.getRandomNumber(10)-5);
+                deathTime++;
+            }
+            else if(animationTimer.millisElapsed() < 99)
+            {
+                return;
+            }
+            else if(deathIndex !=11)
+            {
+                Explosion.play();
+                setImage(explosion[deathIndex]);     
+                deathIndex = (deathIndex + 1) % explosion.length;
+            }
+            else
+            {
+                world.removeObject(this);
+                world.playerHP++;
+            }
         }
     }
     int imageIndex = 0;

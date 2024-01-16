@@ -12,7 +12,7 @@ public class Boss extends SmoothMover
      * Act - do whatever the Boss wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
-    int bHP = 9;
+    int bHP = 18;
     SimpleTimer animationTimer = new SimpleTimer();
     String direction = "right";
     boolean damaging = false;
@@ -44,6 +44,15 @@ public class Boss extends SmoothMover
     
     GreenfootImage[] TR = new GreenfootImage[12];
     GreenfootImage[] TL = new GreenfootImage[12];
+    
+    GreenfootImage[] deathR = new GreenfootImage[11];
+    GreenfootImage[] deathL = new GreenfootImage[11];
+    
+    GreenfootSound dash = new GreenfootSound("BossDash.wav");
+    GreenfootSound blade = new GreenfootSound("BossSword.wav");
+    GreenfootSound stomp = new GreenfootSound("BossStomp.wav");
+    GreenfootSound landI = new GreenfootSound("Land2.wav");
+    GreenfootSound landS = new GreenfootSound("Land.wav");
     
     public Boss()
     {
@@ -86,68 +95,86 @@ public class Boss extends SmoothMover
             TL[i] = new GreenfootImage("images/Enemies/Boss/teleport/pixil-frame-" + i + ".png");
             TL[i].mirrorHorizontally();
         }
+        for(int i = 0; i < 11; i++)
+        {
+            //renaming files is pain, so I didn't
+            deathR[i] = new GreenfootImage("images/Enemies/Boss/death/pixil-frame-" + i + ".png");
+            deathL[i] = new GreenfootImage("images/Enemies/Boss/death/pixil-frame-" + i + ".png");
+            deathL[i].mirrorHorizontally();
+        }
     }
     
     public void act()
     {
-        if(!introFinished)
+        GameWorld world = (GameWorld) getWorld();
+        if(!world.paused)
         {
-            introFall();
-        }
-        else
-        {
-            GameWorld world = (GameWorld) getWorld();
-            if(currAttack == 0)
+            if(!introFinished)
             {
-                if(world.player.getX() > getX())
-                {
-                    direction = "right";
-                }
-                else
-                {
-                    direction = "left";
-                }
-                currAttack = Greenfoot.getRandomNumber(5);
-                isGrounded = false;
-            }     
-            if(isGrounded)
-            {
-                if(currAttack == 1)
-                {
-                    dash();
-                }
-                else if(currAttack == 2 && 200 > Math.sqrt(Math.pow(getX()-world.player.getX(),2)+Math.pow(getY()-world.player.getY(),2)))
-                {
-                    stomp();
-                }
-                else if(currAttack == 2)
-                {
-                    currAttack = 0;
-                }
-                else if(currAttack == 3)
-                {
-                    blade();
-                }
-                else if(currAttack == 4)
-                {
-                    fallLocationFound = false;
-                    teleport();
-                }
-                else if(currAttack == 5)
-                {
-                    fall();
-                }
+                introFall();
             }
             else
             {
-                fallUntilGround();
+                if(currAttack == 0)
+                {
+                    if(world.player.getX() > getX())
+                    {
+                        direction = "right";
+                    }
+                    else
+                    {
+                        direction = "left";
+                    }
+                    currAttack = Greenfoot.getRandomNumber(5);
+                    isGrounded = false;
+                }     
+                if(isGrounded&&bHP >= 0)
+                {
+                    if(currAttack == 1)
+                    {
+                        dash();
+                    }
+                    else if(currAttack == 2 && 200 > Math.sqrt(Math.pow(getX()-world.player.getX(),2)+Math.pow(getY()-world.player.getY(),2)))
+                    {
+                        stomp();
+                    }
+                    else if(currAttack == 2)
+                    {
+                        currAttack = 0;
+                    }
+                    else if(currAttack == 3)
+                    {
+                        blade();
+                    }
+                    else if(currAttack == 4)
+                    {
+                        fallLocationFound = false;
+                        teleport();
+                    }
+                    else if(currAttack == 5)
+                    {
+                        fall();
+                    }
+                }
+                else if(bHP >= 0)
+                {
+                    fallUntilGround();
+                }
+                if(bHP >= 0)
+                {
+                    bounding();
+                    iframeB++;
+                }
+                if(bHP < 0)
+                {
+                    death();
+                }
             }
-            bounding();
-            iframeB++;
         }
     }
     int fallIndex = 0;
     int landIndex = 0;
+    
     public void introFall()
     {
         GameWorld world = (GameWorld) getWorld();
@@ -164,6 +191,7 @@ public class Boss extends SmoothMover
         }
         else if(landIndex < land.length)
         {
+            landI.play();
             setLocation(getX(),600-75);
             animationTimer.mark();
             setImage(land[landIndex]);     
@@ -176,11 +204,10 @@ public class Boss extends SmoothMover
             attack = false;
         }
     }
-    
     public void fall()
     {
         GameWorld world = (GameWorld) getWorld();
-        if(animationTimer.millisElapsed() < 75)
+        if(animationTimer.millisElapsed() < 75||(bHP<9&&animationTimer.millisElapsed() < 25))
         {
             return;
         }
@@ -201,6 +228,10 @@ public class Boss extends SmoothMover
         }
         else if(landIndex < land.length)
         {
+            if(landIndex == 0)
+            {
+                landS.play();
+            }
             fallDist = 0;
             damaging = false;
             animationTimer.mark();
@@ -221,7 +252,7 @@ public class Boss extends SmoothMover
     int dashIndex = 0;
     public void dash()
     {
-        if(animationTimer.millisElapsed() < 100)
+        if(animationTimer.millisElapsed() < 100||(bHP<9&&animationTimer.millisElapsed() <25))
         {
             return;
         }
@@ -233,15 +264,16 @@ public class Boss extends SmoothMover
                 setImage(dashRP[dashPIndex]);     
                 dashPIndex++;
             }   
-            else if(dashable < 10)
+            else if(dashable < 5)
             {
+                dash.play();
                 damaging = true;
-                setImage(dashR[fallIndex]);   
+                setImage(dashR[dashIndex]);   
                 dashIndex = (dashIndex + 1) % dashR.length;
                 dashable++;
-                move(25);
+                move(50);
             }
-            if(dashable >= 10)
+            if(dashable >= 5)
             {
                 damaging = false;
                 dashable = 0;
@@ -258,15 +290,16 @@ public class Boss extends SmoothMover
                 setImage(dashLP[dashPIndex]);     
                 dashPIndex++;
             }   
-            else if(dashable < 10)
+            else if(dashable < 5)
             {
+                dash.play();
                 damaging = true;
-                setImage(dashL[fallIndex]);   
+                setImage(dashL[dashIndex]);   
                 dashIndex = (dashIndex + 1) % dashL.length;
                 dashable++;
-                move(-25);
+                move(-50);
             }
-            if(dashable >= 10)
+            if(dashable >= 5)
             {
                 damaging = false;
                 dashable = 0;
@@ -280,7 +313,7 @@ public class Boss extends SmoothMover
     public void blade()
     {
         GameWorld world = (GameWorld) getWorld();
-        if(animationTimer.millisElapsed() < 100)
+        if(animationTimer.millisElapsed() < 100||(bHP<9&&animationTimer.millisElapsed() <25))
         {
             return;
         }
@@ -300,8 +333,9 @@ public class Boss extends SmoothMover
                 animationTimer.mark();
                 turnTowards(world.player.getX(), world.player.getY());
             }
-            else if(dashable < 20)
+            else if(dashable < 30)
             {
+                blade.play();
                 move(20);
                 dashable++;
             }
@@ -333,6 +367,7 @@ public class Boss extends SmoothMover
             }
             else if(dashable < 30)
             {
+                blade.play();
                 dashable++;
                 move(20);
             }
@@ -351,7 +386,7 @@ public class Boss extends SmoothMover
     int stompIndex;   
     public void stomp()
     {
-        if(animationTimer.millisElapsed() < 25)
+        if(animationTimer.millisElapsed() < 25||(bHP<9&&animationTimer.millisElapsed() <10))
         {
             return;
         }
@@ -363,6 +398,10 @@ public class Boss extends SmoothMover
                 damaging = true;
                 setImage(stompR[stompIndex]);   
                 stompIndex = (stompIndex + 1) % stompR.length;
+                if(stompIndex == 7)
+                {
+                    stomp.play();
+                }
             }
             else
             {
@@ -379,6 +418,10 @@ public class Boss extends SmoothMover
                 damaging = true;
                 setImage(stompL[stompIndex]);   
                 stompIndex = (stompIndex + 1) % stompR.length;
+                if(stompIndex == 7)
+                {
+                    stomp.play();
+                }
             }
             else
             {
@@ -400,7 +443,7 @@ public class Boss extends SmoothMover
     {
         GameWorld world = (GameWorld) getWorld();
         damaging = false;
-        if(animationTimer.millisElapsed() < 100)
+        if(animationTimer.millisElapsed() < 100||(bHP<9&&animationTimer.millisElapsed() <25))
         {
             return;
         }
@@ -450,6 +493,33 @@ public class Boss extends SmoothMover
         }
     }
     
+    int deathIndex;
+    public void death()
+    {
+        damaging = false;
+        GameWorld world = (GameWorld) getWorld();
+        if(animationTimer.millisElapsed() < 250)
+        {
+            return;
+        }
+        animationTimer.mark();
+        if(direction.equals("right"))
+        {
+            setImage(deathR[deathIndex]);     
+            deathIndex = (deathIndex + 1) % deathR.length;
+        }
+        else
+        {
+            setImage(deathL[deathIndex]);
+            deathIndex = (deathIndex + 1) % deathR.length;        
+        }
+        if(deathIndex == 10)
+        {
+            world.bossEnd = true;
+            world.removeObject(this);
+        }
+    }
+    
     public void bounding()
     {
         if(getX() < 70)
@@ -496,4 +566,5 @@ public class Boss extends SmoothMover
             isGrounded = true;
         }
     }
+
 }
