@@ -207,7 +207,7 @@ public class Boss extends SmoothMover
     public void fall()
     {
         GameWorld world = (GameWorld) getWorld();
-        if(animationTimer.millisElapsed() < 75)
+        if(animationTimer.millisElapsed() < 75||(bHP<9&&animationTimer.millisElapsed() < 25))
         {
             return;
         }
@@ -252,7 +252,7 @@ public class Boss extends SmoothMover
     int dashIndex = 0;
     public void dash()
     {
-        if(animationTimer.millisElapsed() < 100)
+        if(animationTimer.millisElapsed() < 100||(bHP<9&&animationTimer.millisElapsed() <25))
         {
             return;
         }
@@ -268,7 +268,7 @@ public class Boss extends SmoothMover
             {
                 dash.play();
                 damaging = true;
-                setImage(dashR[fallIndex]);   
+                setImage(dashR[dashIndex]);   
                 dashIndex = (dashIndex + 1) % dashR.length;
                 dashable++;
                 move(50);
@@ -294,7 +294,7 @@ public class Boss extends SmoothMover
             {
                 dash.play();
                 damaging = true;
-                setImage(dashL[fallIndex]);   
+                setImage(dashL[dashIndex]);   
                 dashIndex = (dashIndex + 1) % dashL.length;
                 dashable++;
                 move(-50);
@@ -313,7 +313,7 @@ public class Boss extends SmoothMover
     public void blade()
     {
         GameWorld world = (GameWorld) getWorld();
-        if(animationTimer.millisElapsed() < 100)
+        if(animationTimer.millisElapsed() < 100||(bHP<9&&animationTimer.millisElapsed() <25))
         {
             return;
         }
@@ -386,7 +386,7 @@ public class Boss extends SmoothMover
     int stompIndex;   
     public void stomp()
     {
-        if(animationTimer.millisElapsed() < 25)
+        if(animationTimer.millisElapsed() < 25||(bHP<9&&animationTimer.millisElapsed() <10))
         {
             return;
         }
@@ -443,7 +443,7 @@ public class Boss extends SmoothMover
     {
         GameWorld world = (GameWorld) getWorld();
         damaging = false;
-        if(animationTimer.millisElapsed() < 100)
+        if(animationTimer.millisElapsed() < 100||(bHP<9&&animationTimer.millisElapsed() <25))
         {
             return;
         }
@@ -496,6 +496,7 @@ public class Boss extends SmoothMover
     int deathIndex;
     public void death()
     {
+        damaging = false;
         GameWorld world = (GameWorld) getWorld();
         if(animationTimer.millisElapsed() < 250)
         {

@@ -35,6 +35,9 @@ public class AEnemy extends Enemy
     public void act()
     {
         GameWorld world = (GameWorld) getWorld();
+        Explosion.setVolume(world.maxV);
+        metalHit.setVolume(world.maxV);
+        death.setVolume(world.maxV);
         if(!world.paused)
         {
             if(health > 0)

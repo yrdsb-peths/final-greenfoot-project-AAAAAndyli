@@ -238,7 +238,7 @@ public class Player extends SmoothMover
         if(!getWorld().getObjects(Boss.class).isEmpty()&&world.voidBird.isTouchingPlayer(false)&& dashable > 20&& iFrames > 50)
         {
 
-            if(world.voidBird.bHP != 9)
+            if(world.voidBird.bHP != 18)
             {
                 world.voidBird.bHP++;
             }

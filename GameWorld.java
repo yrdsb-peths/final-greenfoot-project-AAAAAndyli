@@ -478,29 +478,29 @@ public class GameWorld extends World
             {
                 calmOrCombat = maxV;
             }
-            if(calmV > maxV-calmOrCombat)
-            {
-                calmV--;
-            }
-            else if(calmV < maxV-calmOrCombat)
-            {
-                calmV+=2;
-            }
             if(getObjects(Boss.class).size() != 0)
             {
-                calmV--;
-            }
-            if(combatV > calmOrCombat)
-            {
-                combatV--;
-            }
-            else if(combatV < calmOrCombat)
-            {
-                combatV++;
-            }
-            if(getObjects(Boss.class).size() != 0)
-            {
+                calmV-=2;
                 combatV-=2;
+            }
+            else
+            {
+                if(calmV > maxV-calmOrCombat)
+                {
+                    calmV--;
+                }
+                else if(calmV < maxV-calmOrCombat)
+                {
+                    calmV+=2;
+                }
+                if(combatV > calmOrCombat)
+                {
+                    combatV--;
+                }
+                else if(combatV < calmOrCombat)
+                {
+                    combatV++;
+                }
             }
         }
 
