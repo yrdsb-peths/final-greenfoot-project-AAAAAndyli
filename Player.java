@@ -83,19 +83,19 @@ public class Player extends SmoothMover
             touchingEnemy();
             //movement
             isWalking = false;
-            if(Greenfoot.isKeyDown("left"))
+            if(Greenfoot.isKeyDown("left")||Greenfoot.isKeyDown("a"))
             {
                 isWalking = true;
                 hMovement -= 1;
                 facing = "left";
             }
-            if(Greenfoot.isKeyDown("right"))
+            if(Greenfoot.isKeyDown("right")||Greenfoot.isKeyDown("d"))
             {
                 isWalking = true;
                 hMovement += 1;
                 facing = "right";
             }
-            if(Greenfoot.isKeyDown("up"))
+            if(Greenfoot.isKeyDown("up")||Greenfoot.isKeyDown("w"))
             {
                 isGrounded = false;
                 jump();
