@@ -583,6 +583,7 @@ public class Boss extends SmoothMover
     int deathIndex;
     public void death()
     {
+        setRotation(0);
         damaging = false;
         GameWorld world = (GameWorld) getWorld();
         if(animationTimer.millisElapsed() < 250)
