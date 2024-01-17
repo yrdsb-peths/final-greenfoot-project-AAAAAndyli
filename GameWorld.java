@@ -468,8 +468,8 @@ public class GameWorld extends World
     public GameWorld()
     {    
         super(1200, 600, 1, false); 
-        buildWorld(bossArena);
-        worldNum = 25;
+        buildWorld(tuworld1);
+        //worldNum = 25;
         HP = new Label(0,40);
         addObject(HP, 50, 30);
         timerLabel = new Label(0,40);

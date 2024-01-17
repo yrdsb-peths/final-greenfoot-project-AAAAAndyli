@@ -17,7 +17,7 @@ public class Dashindicator extends Actor
         GameWorld world = (GameWorld) getWorld();
         if(world.player.dashable < 50)
         {
-            getImage().setTransparency(world.player.dashable*4);
+            getImage().setTransparency(world.player.dashable*3);
         }
         //ensure the player knows when the dash is fully charged
         else
