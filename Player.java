@@ -34,10 +34,10 @@ public class Player extends SmoothMover
     GreenfootImage[] dashRight = new GreenfootImage[3];
     GreenfootImage[] dashLeft = new GreenfootImage[3];
     
-    GreenfootSound dash = new GreenfootSound("Dash.wav");
-    GreenfootSound charged = new GreenfootSound("Charged.wav");
-    GreenfootSound damage = new GreenfootSound("Pdamage.wav");
-    GreenfootSound bossDamage = new GreenfootSound("BossHit.wav");
+    GreenfootSound dash = new GreenfootSound("Dash.mp3");
+    GreenfootSound charged = new GreenfootSound("Charged.mp3");
+    GreenfootSound damage = new GreenfootSound("Pdamage.mp3");
+    GreenfootSound bossDamage = new GreenfootSound("BossHit.mp3");
     
     String facing = "right";
     /**

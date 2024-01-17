@@ -44,12 +44,12 @@ public class Boss extends SmoothMover
     GreenfootImage[] deathR = new GreenfootImage[11];
     GreenfootImage[] deathL = new GreenfootImage[11];
     
-    GreenfootSound dash = new GreenfootSound("BossDash.wav");
-    GreenfootSound blade = new GreenfootSound("BossSword.wav");
-    GreenfootSound stomp = new GreenfootSound("BossStomp.wav");
-    GreenfootSound landI = new GreenfootSound("Land2.wav");
-    GreenfootSound landS = new GreenfootSound("Land.wav");
-    GreenfootSound death = new GreenfootSound("BossDeath.wav");
+    GreenfootSound dash = new GreenfootSound("BossDash.mp3");
+    GreenfootSound blade = new GreenfootSound("BossSword.mp3");
+    GreenfootSound stomp = new GreenfootSound("BossStomp.mp3");
+    GreenfootSound landI = new GreenfootSound("Land2.mp3");
+    GreenfootSound landS = new GreenfootSound("Land.mp3");
+    GreenfootSound death = new GreenfootSound("BossDeath.mp3");
     
     public Boss()
     {

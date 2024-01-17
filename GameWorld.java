@@ -472,6 +472,7 @@ public class GameWorld extends World
     public GameWorld()
     {    
         super(1200, 600, 1, false); 
+        maxV = 100;
         buildWorld(tuworld1);
         //worldNum = 25;
         HP = new Label(0,40);

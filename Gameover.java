@@ -8,7 +8,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Gameover extends World
 {
-    GreenfootSound go = new GreenfootSound("go.wav");
+    GreenfootSound go = new GreenfootSound("go.mp3");
     /**
      * Constructor for objects of class Gameover.
      * 

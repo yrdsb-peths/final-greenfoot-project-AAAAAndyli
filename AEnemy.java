@@ -16,7 +16,7 @@ public class AEnemy extends Enemy
     double jumpHeight = 0;
     GreenfootImage[] floatRight = new GreenfootImage[5];
     GreenfootImage[] floatLeft = new GreenfootImage[5];
-    GreenfootSound death = new GreenfootSound("HunterDeath.wav");
+    GreenfootSound death = new GreenfootSound("HunterDeath.mp3");
     public AEnemy()
     {
         speed = 2;
@@ -26,6 +26,7 @@ public class AEnemy extends Enemy
             floatLeft[i] = new GreenfootImage("images/Enemies/advancedRobot/Abot" + i + ".png");
             floatLeft[i].mirrorHorizontally();
         }
+        death = new GreenfootSound("HunterDeath.mp3");
         animationTimer.mark();
     }
     public void act()
@@ -166,7 +167,6 @@ public class AEnemy extends Enemy
                 }
                 iFrames++;
                 death();
-                death = new GreenfootSound("HunterDeath.wav");
                 animate(floatRight, floatLeft);
             }
             else

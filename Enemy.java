@@ -18,9 +18,9 @@ public class Enemy extends SmoothMover
     GreenfootImage[] moveLeft = new GreenfootImage[7];
     GreenfootImage[] explosion = new GreenfootImage[12];
     
-    GreenfootSound Explosion = new GreenfootSound("Explosion.wav");
-    GreenfootSound metalHit = new GreenfootSound("RHit.wav");
-    GreenfootSound death = new GreenfootSound("DroneDeath.wav");
+    GreenfootSound Explosion = new GreenfootSound("Explosion.mp3");
+    GreenfootSound metalHit = new GreenfootSound("RHit.mp3");
+    GreenfootSound death = new GreenfootSound("DroneDeath.mp3");
     public Enemy()
     {
         for(int i = 0; i < 7; i++)
