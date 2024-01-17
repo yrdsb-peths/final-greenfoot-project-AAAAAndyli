@@ -70,9 +70,6 @@ public class Button extends Actor
                 if(getWorld().getClass().getName()=="GameWorld")
                 {
                     GameWorld world = (GameWorld) getWorld();
-                    world.calm.stop();
-                    world.combat.stop();
-                    world.boss.stop();
                 }
                 if(getWorld().getClass().getName()=="Gameover")
                 {

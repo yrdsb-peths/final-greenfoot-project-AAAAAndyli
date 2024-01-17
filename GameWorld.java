@@ -461,9 +461,7 @@ public class GameWorld extends World
     Bosshealth bossHP = new Bosshealth();
     Dashindicator dashI = new Dashindicator();
     
-    GreenfootSound calm = new GreenfootSound("song1.mp3");
-    GreenfootSound combat = new GreenfootSound("song2.mp3");
-    GreenfootSound boss = new GreenfootSound("boss.mp3");//("tenebre rosso sangue.mp3");
+    
     
     /**
      * Constructor for objects of class GameWorld1.
@@ -480,30 +478,13 @@ public class GameWorld extends World
         timerLabel = new Label(0,40);
         addObject(timerLabel, 50, 80);
         addObject(dashI, 50, 120);
-        calm.setVolume(calmV);
-        combat.setVolume(combatV);
-        boss.setVolume(maxV);
-        calm.playLoop();
-        combat.playLoop();
     }
 
     public void act()
     {
-        calm.setVolume(calmV);
-        combat.setVolume(combatV);
-        if(voidBird.bHP > 0)
-        {
-            boss.setVolume(maxV);
-        }
         if(playerHP < 0)
         {
             //switches to game over if the player is dead
-            calm.setVolume(0);
-            combat.setVolume(0);
-            boss.setVolume(0);
-            calm.stop();
-            combat.stop();
-            boss.stop();
             Gameover gameOver = new Gameover();
             Greenfoot.setWorld(gameOver);
         }
@@ -560,63 +541,6 @@ public class GameWorld extends World
     
         //music related code
         
-        if(voidBird.introFinished)
-        {
-            boss.playLoop();
-            if(voidBird.bHP < 0)
-            {
-                boss.setVolume(bossV--);
-            }
-        }
-        else
-        {
-            if((getObjects(Enemy.class).size() != 0|| getObjects(AEnemy.class).size() != 0)&&calmOrCombat<maxV)
-            {
-                calmOrCombat++;
-            }
-            else if(calmOrCombat!=0)
-            {
-                calmOrCombat--;
-            }
-            if(calmOrCombat > maxV)
-            {
-                calmOrCombat = maxV;
-            }
-            if(getObjects(Boss.class).size() != 0)
-            {
-                calmV-=2;
-                combatV-=2;
-            }
-            else
-            {
-                if(calmV > maxV-calmOrCombat)
-                {
-                    calmV--;
-                }
-                else if(calmV < maxV-calmOrCombat)
-                {
-                    calmV+=2;
-                }
-                if(combatV > calmOrCombat)
-                {
-                    combatV--;
-                }
-                else if(combatV < calmOrCombat)
-                {
-                    combatV++;
-                }
-            }
-        }
-
-        if((Greenfoot.isKeyDown("=")||Greenfoot.isKeyDown("+"))&&maxV < 100)
-        {
-            maxV++;
-        }
-        if(Greenfoot.isKeyDown("_")||Greenfoot.isKeyDown("-")&& maxV > 0)
-        {
-            maxV--;
-        }
-
     }
     /**
      * method used to create a world by reading an array and placing tiles, enemies and player onto a grid.
