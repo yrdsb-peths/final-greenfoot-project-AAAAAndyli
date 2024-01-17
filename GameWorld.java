@@ -24,6 +24,11 @@ public class GameWorld extends World
     public int worldNum = 0;
     public boolean paused = false;
     boolean bossEnd = false;
+    //achievements
+    boolean killAll = true;
+    boolean completeUnder5 = true;
+    boolean noHit = true;
+    
     Box box = new Box();
     Label dashlabel = new Label("Press <Space> to dash!", 32);
     //levels in the game
@@ -430,15 +435,16 @@ public class GameWorld extends World
         {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 1, },
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, },
         };
-    public int[][] win = {
-        {0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, },
-        {0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, },
-        {0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, },
-        {0, 0, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, },
-        {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, },
-        {0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, },
-        {0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, },
-        {0, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, },
+    public int[][] win =
+        {
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
         {2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
@@ -462,7 +468,8 @@ public class GameWorld extends World
     public GameWorld()
     {    
         super(1200, 600, 1, false); 
-        buildWorld(tuworld1);
+        buildWorld(bossArena);
+        worldNum = 25;
         HP = new Label(0,40);
         addObject(HP, 50, 30);
         timerLabel = new Label(0,40);
@@ -626,6 +633,14 @@ public class GameWorld extends World
                     addObject(voidBird,600,-500);
                     addObject(bossHP, 600, 600);
                 }
+                else if(world[j][i] == 7)
+                {
+                    for(int k = 0; k < 3; k++)
+                    {
+                        Achievements achievement = new Achievements(k);
+                        addObject(achievement, i*50+25, j*50+50+k*100);
+                    }
+                }
             }
         }
         player.setLocation(playerSpawnX, playerSpawnY);
@@ -659,6 +674,10 @@ public class GameWorld extends World
     */
     public void changeWorld(int[][] world)
     {
+        if(getObjects(Enemy.class).size() != 0|| getObjects(AEnemy.class).size() != 0)
+        {
+            killAll = false;
+        }
         removeObjects(getObjects(null));
         buildWorld(world);
         addObject(dashI, 50, 120);
@@ -672,6 +691,16 @@ public class GameWorld extends World
         {
             removeObject(dashlabel);
         }
+        if(world == win)
+        {
+            if(minutes > 4)
+            {
+                completeUnder5 = false;
+            }
+            if(playerHP!=30)
+            {
+                noHit = false;
+            }
+        }
     }
-
 }
