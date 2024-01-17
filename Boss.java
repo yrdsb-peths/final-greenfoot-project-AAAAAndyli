@@ -377,13 +377,13 @@ public class Boss extends SmoothMover
         {
             if(bladeIndex < bladeR.length)
             {
-                damaging = true;
                 animationTimer.mark();
                 setImage(bladeR[bladeIndex]);
                 bladeIndex++;
             }
             else if(dashable < 1)
             {
+                damaging = true;
                 setImage(bladeR[14]);
                 dashable++;
                 animationTimer.mark();
@@ -409,13 +409,13 @@ public class Boss extends SmoothMover
         {
             if(bladeIndex < bladeL.length)
             {
-                damaging = true;
                 animationTimer.mark();
                 setImage(bladeL[bladeIndex]);     
                 bladeIndex++;
             }
             else if(dashable < 1)
             {
+                damaging = true;
                 dashable++;
                 setImage(bladeR[14]); 
                 animationTimer.mark();

@@ -29,6 +29,10 @@ public class GameWorld extends World
     boolean completeUnder5 = true;
     boolean noHit = true;
     
+    boolean cheats = false;
+    boolean healthCheat = false;
+    Label cheat = new Label("CHEATS ARE ON", 50);
+    
     Box box = new Box();
     Label dashlabel = new Label("Press <Space> to dash!", 32);
     //levels in the game
@@ -531,6 +535,26 @@ public class GameWorld extends World
             removeObjects(getObjects(Button.class));
             runActCounter();
         }
+        if(Greenfoot.isKeyDown("1"))
+        {
+            healthCheat = true;
+            cheats = true;
+            killAll = false;
+            completeUnder5 = false;
+            noHit = false;
+        }
+        if(Greenfoot.isKeyDown("2"))
+        {
+            cheats = true;
+            changeWorld(bossArena);
+            worldNum = 25;
+            killAll = false;
+            completeUnder5 = false;
+        }
+        if(healthCheat)
+        {
+            playerHP = 30;
+        }
         
     
         //music related code
@@ -700,6 +724,10 @@ public class GameWorld extends World
             if(playerHP!=30)
             {
                 noHit = false;
+            }
+            if(cheats)
+            {
+                addObject(cheat, 600, 450);
             }
         }
     }

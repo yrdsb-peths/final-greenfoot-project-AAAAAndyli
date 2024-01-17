@@ -279,11 +279,11 @@ public class Player extends SmoothMover
             //pushes player towards wind direction
             if(isTouching(WindL.class))
             {
-                setLocation(getX()-5, getY());
+                setLocation(getX()-10, getY());
             }
             else
             {
-                setLocation(getX()+5, getY());
+                setLocation(getX()+10, getY());
             }
         }
     }
