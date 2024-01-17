@@ -183,7 +183,7 @@ public class Boss extends SmoothMover
                         }
                         else
                         {
-                            teleport(25);
+                            teleport(50);
                         }
                     }
                     else if(currAttack == 5)
@@ -194,7 +194,7 @@ public class Boss extends SmoothMover
                         }
                         else
                         {
-                            fall(25);
+                            fall(40);
                         }
                     }
                 }
@@ -274,6 +274,10 @@ public class Boss extends SmoothMover
                 fallLocationFound = true;
                 fallLocation = fallDist+getY() - getY()%50-25;
                 setLocation(getX(),fallLocation);
+                Wind wind = new Wind();
+                world.addObject(wind, getX(), getY());
+                WindL windL = new WindL();
+                world.addObject(windL, getX(), getY());
             }
         }
         else if(landIndex < land.length)
@@ -377,13 +381,13 @@ public class Boss extends SmoothMover
         {
             if(bladeIndex < bladeR.length)
             {
-                damaging = true;
                 animationTimer.mark();
                 setImage(bladeR[bladeIndex]);
                 bladeIndex++;
             }
             else if(dashable < 1)
             {
+                damaging = true;
                 setImage(bladeR[14]);
                 dashable++;
                 animationTimer.mark();
@@ -409,13 +413,13 @@ public class Boss extends SmoothMover
         {
             if(bladeIndex < bladeL.length)
             {
-                damaging = true;
                 animationTimer.mark();
                 setImage(bladeL[bladeIndex]);     
                 bladeIndex++;
             }
             else if(dashable < 1)
             {
+                damaging = true;
                 dashable++;
                 setImage(bladeR[14]); 
                 animationTimer.mark();
