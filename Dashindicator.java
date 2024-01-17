@@ -1,24 +1,23 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Dashindicator here.
+ * It's indicating the dash
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version 1
  */
 public class Dashindicator extends Actor
 {
     /**
-     * Act - do whatever the Dashindicator wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Visually indicates the cooldown for the dash
      */
     GreenfootImage dashIndicator = new GreenfootImage("images/dash.png");
     public void act()
     {
         GameWorld world = (GameWorld) getWorld();
-        if(world.player.dashable < 100)
+        if(world.player.dashable < 50)
         {
-            getImage().setTransparency(world.player.dashable*2);
+            getImage().setTransparency(world.player.dashable*4);
         }
         //ensure the player knows when the dash is fully charged
         else

@@ -1,17 +1,13 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class AdvancedEnemy here.
+ * An more advanced enemy AI, with rudimentary pathfinding (no it doesn't)
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version i have no idea at this point
  */
 public class AEnemy extends Enemy
 {
-    /**
-     * Act - do whatever the AdvancedEnemy wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
     //state 0 = patrolling
     //state 1 = hunting
     
@@ -109,14 +105,14 @@ public class AEnemy extends Enemy
                 }
                 else
                 {
-                    if(world.player.getX() > getX())
+                    if(world.player.getX() >= getX())
                     {
                         direction = "right";
                         if(!world.boxAtLocation(getX(), getY()+26)||(!world.boxAtLocation(getX()+26, getY()-25))&&!world.boxAtLocation(getX(), getY()+25))
                         {
                             move(speed+2);
                         }
-                        if(((world.player.getY() < getY())||(!world.boxAtLocation(getX()+26, getY()-25)))&&world.boxAtLocation(getX(), getY()-25))
+                        if(((world.player.getY() <= getY())||(!world.boxAtLocation(getX()+26, getY()-25)))&&world.boxAtLocation(getX(), getY()-25))
                         {
                             setLocation(getX()+((speed+2)/2),getY()-3);
                         }
@@ -132,7 +128,7 @@ public class AEnemy extends Enemy
                         {
                             move(-1*speed-2);
                         }
-                        if(((world.player.getY() < getY())||(!world.boxAtLocation(getX()-26, getY()-25)))&&world.boxAtLocation(getX(), getY()-25))
+                        if(((world.player.getY() <= getY())||(!world.boxAtLocation(getX()-26, getY()-25)))&&world.boxAtLocation(getX(), getY()-25))
                         {
                             setLocation(getX()+((-1*speed-2)/2),getY()-3);
                         }

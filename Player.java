@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Player here.
+ * The player
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version 2
  */
 public class Player extends SmoothMover
 {
@@ -35,6 +35,8 @@ public class Player extends SmoothMover
     GreenfootImage[] dashLeft = new GreenfootImage[3];
     
     GreenfootSound dash = new GreenfootSound("Dash.wav");
+    GreenfootSound charged = new GreenfootSound("Charged.wav");
+    GreenfootSound damage = new GreenfootSound("Pdamage.wav");
     GreenfootSound bossDamage = new GreenfootSound("BossHit.wav");
     
     String facing = "right";
@@ -72,7 +74,9 @@ public class Player extends SmoothMover
     public void act()
     {
         GameWorld world = (GameWorld) getWorld();
-
+        bossDamage.setVolume(world.maxV);
+        damage.setVolume(world.maxV);
+        charged.setVolume(world.maxV);
         dash.setVolume(world.maxV);
         if(!world.paused)
         {
@@ -144,6 +148,11 @@ public class Player extends SmoothMover
             {
                 hMovement=10;
             }
+            
+            if(dashable == 50)
+            {
+                charged.play();
+            }
             dashable++;
             iFrames++;
             animate();
@@ -182,7 +191,7 @@ public class Player extends SmoothMover
                 isGrounded = false;
             }
         }
-        if(dashable > 100)
+        if(dashable > 50)
         {
             if(!isTouching(Box.class))
             {
@@ -209,6 +218,9 @@ public class Player extends SmoothMover
             hMovement = 0;
         }
     }
+    /**
+     * Creates bountries for the player
+     */
     public void bounding()
     {
         GameWorld world = (GameWorld) getWorld();
@@ -232,16 +244,19 @@ public class Player extends SmoothMover
             setLocation(getX(), 2);
         }
     }
+    /**
+     * checks if player is touching enemy/boss/projectile
+     */
     public void touchingEnemy()
     {
         GameWorld world = (GameWorld) getWorld();
         if(!getWorld().getObjects(Boss.class).isEmpty()&&world.voidBird.isTouchingPlayer(false)&& dashable > 20&& iFrames > 50)
         {
-
             if(world.voidBird.bHP != 18)
             {
                 world.voidBird.bHP++;
             }
+            damage.play();
             world.playerHP -= 2;
             iFrames = 0;
             hMovement = 0;
@@ -252,12 +267,24 @@ public class Player extends SmoothMover
             world.voidBird.bHP--;
             world.voidBird.iframeB=0;
         }
-
-        if(isTouching(Enemy.class)&& dashable > 20&& iFrames > 50)
+        if((isTouching(Enemy.class)||isTouching(Wind.class))&& dashable > 20&& iFrames > 50)
         {
+            damage.play();
             world.playerHP --;
             iFrames = 0;
             hMovement = 0;
+        }
+        if(isTouching(Wind.class))
+        {
+            //pushes player towards wind direction
+            if(isTouching(WindL.class))
+            {
+                setLocation(getX()-5, getY());
+            }
+            else
+            {
+                setLocation(getX()+5, getY());
+            }
         }
     }
     int walkIndex = 0;

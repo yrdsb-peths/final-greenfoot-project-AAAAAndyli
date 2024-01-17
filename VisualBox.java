@@ -1,17 +1,17 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class VisualBox here.
+ * Visual representation for Map Creator
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version 1
  */
 public class VisualBox extends Actor
 {
     /**
-     * Act - do whatever the VisualBox wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Does nothing
      */
+
     public void act()
     {
         

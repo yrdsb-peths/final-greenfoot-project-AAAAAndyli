@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class GameWorld1 here.
+ * World which the game takes place
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version idk like 20? sounds like a good number, I'll go with 20
  */
 public class GameWorld extends World
 {
@@ -26,7 +26,7 @@ public class GameWorld extends World
     boolean bossEnd = false;
     Box box = new Box();
     Label dashlabel = new Label("Press <Space> to dash!", 32);
-
+    //levels in the game
     public int[][] tuworld1 = 
         {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -285,6 +285,66 @@ public class GameWorld extends World
         {1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, },
         {1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, },
         };
+    public int[][] platformer5 = 
+        {
+        {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 5, 0, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 4, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, },
+        {0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, },
+        {2, 0, 0, 0, 0, 1, 0, 0, 0, 0, 3, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, },
+        {1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, },
+        {1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, },
+        {1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, },
+        };
+    public int[][] platformer6 = 
+        {
+            {2, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, },
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, },
+            {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, },
+            {0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, },
+            {0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, },
+            {0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, },
+            {0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, },
+            {0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 0, 5, },
+            {0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, },
+        };
+    public int[][] platformer7 = 
+        {
+            {5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, },
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, },
+            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, },
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+            {0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 2, },
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, },
+        };
+    public int[][] platformer8 = 
+    {
+        {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, },
+        {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, },
+        {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 0, 0, },
+        {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, },
+        {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, },
+        {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, },
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, },
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, },
+        {0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, },
+        {2, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, },
+        {1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 5, },
+        {1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, },
+    };
     public int[][] level15 = {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, },
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, },
@@ -313,6 +373,7 @@ public class GameWorld extends World
         {2, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, },
         {1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, },
         };
+
     public int[][] level17 = {
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
         {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
@@ -384,7 +445,7 @@ public class GameWorld extends World
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, },
         };
     
-    public int[][][] worlds = {tuworld1, tuworld2, tuworld3, tuworld4, world2, platformer, platformer2, platformer3, platformer4, level8, level9, level10, level11, level12, level13, level14, level15, level16, level17, level18, level19, bossArena, win};
+    public int[][][] worlds = {tuworld1, tuworld2, tuworld3, tuworld4, world2, platformer, platformer2, platformer3, platformer4, level8, level9, level10, level11, level12, level13, level14, platformer5, platformer6, platformer7, platformer8, level15, level16, level17, level18, level19, bossArena, win};
     Player player = new Player();
     Boss voidBird = new Boss();
     Bosshealth bossHP = new Bosshealth();
@@ -392,7 +453,7 @@ public class GameWorld extends World
     
     GreenfootSound calm = new GreenfootSound("song1.mp3");
     GreenfootSound combat = new GreenfootSound("song2.mp3");
-    GreenfootSound boss = new GreenfootSound("tenebre rosso sangue.mp3");
+    GreenfootSound boss = new GreenfootSound("boss.mp3");//("tenebre rosso sangue.mp3");
     
     /**
      * Constructor for objects of class GameWorld1.
@@ -401,7 +462,6 @@ public class GameWorld extends World
     public GameWorld()
     {    
         super(1200, 600, 1, false); 
-        //prepare();
         buildWorld(tuworld1);
         HP = new Label(0,40);
         addObject(HP, 50, 30);
@@ -417,12 +477,25 @@ public class GameWorld extends World
 
     public void act()
     {
+        calm.setVolume(calmV);
+        combat.setVolume(combatV);
+        if(voidBird.bHP > 0)
+        {
+            boss.setVolume(maxV);
+        }
         if(playerHP < 0)
         {
+            //switches to game over if the player is dead
+            calm.setVolume(0);
+            combat.setVolume(0);
+            boss.setVolume(0);
+            calm.stop();
+            combat.stop();
+            boss.stop();
             Gameover gameOver = new Gameover();
             Greenfoot.setWorld(gameOver);
         }
-        
+        //speed up because it feels better
         Greenfoot. setSpeed(51);
         if(playerHP > 30)
         {
@@ -432,12 +505,14 @@ public class GameWorld extends World
         timerLabel.setValue(minutes + ":" + seconds);
         if(bossEnd)
         {
+            //spawns the level ender after the boss died
             End end = new End();
             addObject(end,600,300);
             bossEnd = false;
         }
         if(!paused&&Greenfoot.isKeyDown("escape"))
         {
+            //pause
             paused = true;   
             Button pause = new Button(1);
             addObject(pause,450,600);
@@ -452,9 +527,6 @@ public class GameWorld extends World
         
     
         //music related code
-        calm.setVolume(calmV);
-        combat.setVolume(combatV);
-        boss.setVolume(maxV);
         
         if(voidBird.introFinished)
         {
@@ -514,7 +586,9 @@ public class GameWorld extends World
         }
 
     }
-
+    /**
+     * method used to create a world by reading an array and placing tiles, enemies and player onto a grid.
+     */
     private void buildWorld(int[][] world)
     {
         for(int j = 0; j < 12; j++)
@@ -554,11 +628,15 @@ public class GameWorld extends World
                 }
             }
         }
+        player.setLocation(playerSpawnX, playerSpawnY);
     }
-    
+    /**
+     *This is a timer that is affected by the pause in-game and in greenfoot. 
+     */
+ 
     private void runActCounter()
     {
-        if (++timer == 50)
+        if (++timer == 70)
         {
             timer = 0;
             seconds++;
@@ -569,12 +647,16 @@ public class GameWorld extends World
             }
         }
     }
-
+    /**
+    * detects if there is no boxes at a location
+    */
     public boolean boxAtLocation(int x,int y)
     {
         return getObjectsAt(x, y, Box.class).isEmpty();
     }
-
+    /**
+    * changes the level    
+    */
     public void changeWorld(int[][] world)
     {
         removeObjects(getObjects(null));

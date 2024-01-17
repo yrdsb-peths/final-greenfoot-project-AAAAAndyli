@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Enemy here.
+ * A simple enemy that moves back and forth
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version 3
  */
 public class Enemy extends SmoothMover
 {
@@ -13,13 +13,11 @@ public class Enemy extends SmoothMover
     int iFrames = 0;
     int speed = 3;
     SimpleTimer animationTimer = new SimpleTimer();
-    /**
-     * Act - do whatever the Enemy wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
+    
     GreenfootImage[] moveRight = new GreenfootImage[7];
     GreenfootImage[] moveLeft = new GreenfootImage[7];
     GreenfootImage[] explosion = new GreenfootImage[12];
+    
     GreenfootSound Explosion = new GreenfootSound("Explosion.wav");
     GreenfootSound metalHit = new GreenfootSound("RHit.wav");
     GreenfootSound death = new GreenfootSound("DroneDeath.wav");
@@ -82,6 +80,10 @@ public class Enemy extends SmoothMover
     }
     int deathTime;
     int deathIndex;
+    /**
+     * Checks if it is touching player, and check its health.
+     * If health is below 0, it dies
+     */
     public void death()
     {
         GameWorld world = (GameWorld) getWorld();
@@ -117,6 +119,9 @@ public class Enemy extends SmoothMover
         }
     }
     int imageIndex = 0;
+    /**
+     * Animate
+     */
     public void animate(GreenfootImage[] right, GreenfootImage[] left)
     {
         if(animationTimer.millisElapsed() < 100)

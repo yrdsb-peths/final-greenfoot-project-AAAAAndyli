@@ -1,17 +1,13 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Button here.
+ * Button
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version 1
  */
 public class Button extends Actor
 {
-    /**
-     * Act - do whatever the Button wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
     GreenfootImage[] button = new GreenfootImage[3];
     boolean hovering;
     int buttonType;
@@ -26,17 +22,23 @@ public class Button extends Actor
             if(buttonType == 0)
             {
                 button[i] = new GreenfootImage("images/Pbutton/pixil-frame-" + i + ".png");
+                //play button
             }
             else if(buttonType == 1)
             {
                 button[i] = new GreenfootImage("images/Rbutton/pixil-frame-" + i + ".png");
+                //resume button
             }
             else if(buttonType == 2)
             {
                 button[i] = new GreenfootImage("images/Qbutton/pixil-frame-" + i + ".png");
+                //quit button
             }
         }
     }
+    /**
+     * Detects mouse inputs
+     */
     public void act()
     {
         MouseInfo mouse = Greenfoot.getMouseInfo();
@@ -58,11 +60,25 @@ public class Button extends Actor
             setImage(button[2]);
             if(buttonType==0)
             {
-                GameWorld world = new GameWorld();
-                Greenfoot.setWorld(world);
+                Mainmenu world = (Mainmenu) getWorld();
+                GameWorld newWorld = new GameWorld();
+                Greenfoot.setWorld(newWorld);
+                world.mm.stop();
             }
             else if(buttonType==2)
             {
+                if(getWorld().getClass().getName()=="GameWorld")
+                {
+                    GameWorld world = (GameWorld) getWorld();
+                    world.calm.stop();
+                    world.combat.stop();
+                    world.boss.stop();
+                }
+                if(getWorld().getClass().getName()=="Gameover")
+                {
+                    Gameover world = (Gameover) getWorld();
+                    world.go.stop();
+                }
                 Mainmenu m = new Mainmenu();
                 Greenfoot.setWorld(m);
             }
