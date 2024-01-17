@@ -47,7 +47,7 @@ All other art is done by me
 All other code is written by me
 
 
-### Code
+# Code
 - Arrays are found in:
     - GameWorld
     - MapCreatorTool
