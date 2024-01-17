@@ -1,17 +1,13 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Boss here.
+ * The boss fight in the game, fought at the end of the game
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version 2
  */
 public class Boss extends SmoothMover
 {
-    /**
-     * Act - do whatever the Boss wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
     int bHP = 27;
     SimpleTimer animationTimer = new SimpleTimer();
     String direction = "right";
@@ -53,9 +49,11 @@ public class Boss extends SmoothMover
     GreenfootSound stomp = new GreenfootSound("BossStomp.wav");
     GreenfootSound landI = new GreenfootSound("Land2.wav");
     GreenfootSound landS = new GreenfootSound("Land.wav");
+    GreenfootSound death = new GreenfootSound("BossDeath.wav");
     
     public Boss()
     {
+        //this took so long, you better like the animations or I'm gonna cry
         for(int i = 0; i < 3; i++)
         {
             fall[i] = new GreenfootImage("images/Enemies/Boss/introBird/f" + i + ".png");
@@ -102,12 +100,22 @@ public class Boss extends SmoothMover
             deathL[i] = new GreenfootImage("images/Enemies/Boss/death/pixil-frame-" + i + ".png");
             deathL[i].mirrorHorizontally();
         }
-        bHP = 27;
+        bHP = 18;
     }
-    
+    /**
+     * Boss AI
+     */
     public void act()
     {
         GameWorld world = (GameWorld) getWorld();
+        //volume setting
+        dash.setVolume(world.maxV);
+        blade.setVolume(world.maxV);
+        stomp.setVolume(world.maxV);
+        landI.setVolume(world.maxV);
+        landS.setVolume(world.maxV);
+        death.setVolume(world.maxV);
+        
         if(!world.paused)
         {
             if(!introFinished)
@@ -118,6 +126,7 @@ public class Boss extends SmoothMover
             {
                 if(currAttack == 0)
                 {
+                    //turns to player and chooses an attack
                     if(world.player.getX() > getX())
                     {
                         direction = "right";
@@ -131,18 +140,19 @@ public class Boss extends SmoothMover
                 }     
                 if(isGrounded&&bHP >= 0)
                 {
+                    //attacks
                     if(currAttack == 1)
                     {
                         if(bHP > 10)
                         {
-                            dash(50);
+                            dash(100);
                         }
                         else
                         {
-                            dash(25);
+                            dash(50);
                         }
                     }
-                    else if(currAttack == 2 && 200 > Math.sqrt(Math.pow(getX()-world.player.getX(),2)+Math.pow(getY()-world.player.getY(),2)))
+                    else if(currAttack == 2)
                     {
                         if(bHP > 10)
                         {
@@ -153,19 +163,15 @@ public class Boss extends SmoothMover
                             stomp(25);
                         }
                     }
-                    else if(currAttack == 2)
-                    {
-                        currAttack = 0;
-                    }
                     else if(currAttack == 3)
                     {
                         if(bHP > 10)
                         {
-                            blade(50);
+                            blade(100);
                         }
                         else
                         {
-                            blade(25);
+                            blade(50);
                         }
                     }
                     else if(currAttack == 4)
@@ -173,7 +179,7 @@ public class Boss extends SmoothMover
                         fallLocationFound = false;
                         if(bHP > 10)
                         {
-                            teleport(50);
+                            teleport(100);
                         }
                         else
                         {
@@ -208,9 +214,14 @@ public class Boss extends SmoothMover
             }
         }
     }
+    
+    //Most attacks are just animations and moving towards the player, as well as turning on collision.
+    
     int fallIndex = 0;
     int landIndex = 0;
-    
+    /**
+     * Falls from the sky
+     */
     public void introFall()
     {
         GameWorld world = (GameWorld) getWorld();
@@ -240,6 +251,9 @@ public class Boss extends SmoothMover
             attack = false;
         }
     }
+    /**
+     * Drops down, doing contact damage
+     */
     public void fall(int speed)
     {
         GameWorld world = (GameWorld) getWorld();
@@ -286,6 +300,9 @@ public class Boss extends SmoothMover
         
     int dashPIndex = 0;
     int dashIndex = 0;
+    /**
+     * Moves in the player's general direction quickly
+     */
     public void dash(int speed)
     {
         if(animationTimer.millisElapsed() < speed)
@@ -345,6 +362,9 @@ public class Boss extends SmoothMover
             }
         }
     }
+    /**
+     * Similar to dash, but can rotate, and goes further, but has longer telegraph
+     */
     int bladeIndex;
     public void blade(int speed)
     {
@@ -418,10 +438,13 @@ public class Boss extends SmoothMover
             }
         }
     }
-    
+    /**
+     * Attack that spawns two wind projectiles
+     */
     int stompIndex;   
     public void stomp(int speed)
     {
+        GameWorld world = (GameWorld) getWorld();
         if(animationTimer.millisElapsed() < speed)
         {
             return;
@@ -437,6 +460,10 @@ public class Boss extends SmoothMover
                 if(stompIndex == 7)
                 {
                     stomp.play();
+                    Wind wind = new Wind();
+                    world.addObject(wind, getX(), getY());
+                    WindL windL = new WindL();
+                    world.addObject(windL, getX(), getY());
                 }
             }
             else
@@ -457,6 +484,10 @@ public class Boss extends SmoothMover
                 if(stompIndex == 7)
                 {
                     stomp.play();
+                    Wind wind = new Wind();
+                    world.addObject(wind, getX(), getY());
+                    WindL windL = new WindL();
+                    world.addObject(windL, getX(), getY());
                 }
             }
             else
@@ -468,11 +499,15 @@ public class Boss extends SmoothMover
         }
         if(stompIndex == 12)
         {
+            stompIndex = 0;
             attack = false;
             damaging = false;
             currAttack = 0;
         }
     }
+    /**
+     * An attack that moves the boss from anywhere, to above you, before using the fall attack
+     */
     int tpIndex;
     boolean tp = false;
     public void teleport(int speed)
@@ -499,11 +534,11 @@ public class Boss extends SmoothMover
                 fallLocationFound = false;
                 if(bHP > 10)
                 {
-                    fall(50);
+                    fall(100);
                 }
                 else
                 {
-                    fall(25);
+                    fall(50);
                 }
                 tp = false;
             }
@@ -528,11 +563,11 @@ public class Boss extends SmoothMover
                 fallLocationFound = false;
                 if(bHP > 10)
                 {
-                    fall(50);
+                    fall(100);
                 }
                 else
                 {
-                    fall(25);
+                    fall(50);
                 }
                 tp = false;
             }
@@ -542,7 +577,9 @@ public class Boss extends SmoothMover
             }
         }
     }
-    
+    /**
+     * Death animation and sound
+     */
     int deathIndex;
     public void death()
     {
@@ -553,6 +590,10 @@ public class Boss extends SmoothMover
             return;
         }
         animationTimer.mark();
+        if(deathIndex == 0)
+        {
+            death.play();
+        }
         if(direction.equals("right"))
         {
             setImage(deathR[deathIndex]);     
@@ -569,7 +610,9 @@ public class Boss extends SmoothMover
             world.removeObject(this);
         }
     }
-    
+    /**
+     * Checks if Boss is touching the boundries, and then stops it from moving further
+     */
     public void bounding()
     {
         if(getX() < 70)
@@ -589,7 +632,9 @@ public class Boss extends SmoothMover
             setLocation(getX(), 525);
         }
     }
-    
+    /**
+     * Checks if Boss is touching Player
+     */
     public boolean isTouchingPlayer(boolean dashing)
     {
         if(dashing)
@@ -602,8 +647,12 @@ public class Boss extends SmoothMover
         }
     }
     boolean isGrounded;    
+    /**
+     * Falls until it touches the ground
+     */
     public void fallUntilGround()
     {
+        //Drops straight to the ground.
         setImage(dashRP[1]);
         GameWorld world = (GameWorld) getWorld();        
         if(world.boxAtLocation(getX(), getY()+25))

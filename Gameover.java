@@ -1,27 +1,30 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Gameover here.
+ * World when you lose
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version 2
  */
 public class Gameover extends World
 {
-
+    GreenfootSound go = new GreenfootSound("go.wav");
     /**
      * Constructor for objects of class Gameover.
      * 
      */
     public Gameover()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
+        // GameOver world, rotissere chicken in background
         super(600, 400, 1); 
         prepare();
+        go.playLoop();
     }
+    
     /**
      * Prepare the world for the start of the program.
      * That is: create the initial objects and add them to the world.
+     * this is intentionally ugly
      */
     private void prepare()
     {
@@ -31,5 +34,7 @@ public class Gameover extends World
         label.setLocation(412,116);
         Button button = new Button(2);
         addObject(button,439,375);
+        label.setLocation(279,197);
+        label.setLocation(351,174);
     }
 }

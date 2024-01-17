@@ -1,10 +1,10 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class GameWorld1 here.
+ * World which the game takes place
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version idk like 20? sounds like a good number, I'll go with 20
  */
 public class GameWorld extends World
 {
@@ -26,7 +26,7 @@ public class GameWorld extends World
     boolean bossEnd = false;
     Box box = new Box();
     Label dashlabel = new Label("Press <Space> to dash!", 32);
-
+    //levels in the game
     public int[][] tuworld1 = 
         {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -453,7 +453,7 @@ public class GameWorld extends World
     
     GreenfootSound calm = new GreenfootSound("song1.mp3");
     GreenfootSound combat = new GreenfootSound("song2.mp3");
-    GreenfootSound boss = new GreenfootSound("tenebre rosso sangue.mp3");
+    GreenfootSound boss = new GreenfootSound("boss.mp3");//("tenebre rosso sangue.mp3");
     
     /**
      * Constructor for objects of class GameWorld1.
@@ -462,8 +462,7 @@ public class GameWorld extends World
     public GameWorld()
     {    
         super(1200, 600, 1, false); 
-        //prepare();
-        buildWorld(bossArena);
+        buildWorld(tuworld1);
         HP = new Label(0,40);
         addObject(HP, 50, 30);
         timerLabel = new Label(0,40);
@@ -480,9 +479,13 @@ public class GameWorld extends World
     {
         calm.setVolume(calmV);
         combat.setVolume(combatV);
-        boss.setVolume(maxV);
+        if(voidBird.bHP > 0)
+        {
+            boss.setVolume(maxV);
+        }
         if(playerHP < 0)
         {
+            //switches to game over if the player is dead
             calm.setVolume(0);
             combat.setVolume(0);
             boss.setVolume(0);
@@ -492,7 +495,7 @@ public class GameWorld extends World
             Gameover gameOver = new Gameover();
             Greenfoot.setWorld(gameOver);
         }
-        
+        //speed up because it feels better
         Greenfoot. setSpeed(51);
         if(playerHP > 30)
         {
@@ -502,12 +505,14 @@ public class GameWorld extends World
         timerLabel.setValue(minutes + ":" + seconds);
         if(bossEnd)
         {
+            //spawns the level ender after the boss died
             End end = new End();
             addObject(end,600,300);
             bossEnd = false;
         }
         if(!paused&&Greenfoot.isKeyDown("escape"))
         {
+            //pause
             paused = true;   
             Button pause = new Button(1);
             addObject(pause,450,600);
@@ -581,7 +586,9 @@ public class GameWorld extends World
         }
 
     }
-
+    /**
+     * method used to create a world by reading an array and placing tiles, enemies and player onto a grid.
+     */
     private void buildWorld(int[][] world)
     {
         for(int j = 0; j < 12; j++)
@@ -623,10 +630,13 @@ public class GameWorld extends World
         }
         player.setLocation(playerSpawnX, playerSpawnY);
     }
-    
+    /**
+     *This is a timer that is affected by the pause in-game and in greenfoot. 
+     */
+ 
     private void runActCounter()
     {
-        if (++timer == 50)
+        if (++timer == 70)
         {
             timer = 0;
             seconds++;
@@ -637,12 +647,16 @@ public class GameWorld extends World
             }
         }
     }
-
+    /**
+    * detects if there is no boxes at a location
+    */
     public boolean boxAtLocation(int x,int y)
     {
         return getObjectsAt(x, y, Box.class).isEmpty();
     }
-
+    /**
+    * changes the level    
+    */
     public void changeWorld(int[][] world)
     {
         removeObjects(getObjects(null));

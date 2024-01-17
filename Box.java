@@ -1,16 +1,15 @@
 import greenfoot.*;  //  (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Box here.
+ * Tile with collision for most things
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version 3
  */
 public class Box extends Actor
 {
     /**
-     * Act - do whatever the Box wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Acts as a collider/obstacle to the player
      */
     public void act()
     {

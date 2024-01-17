@@ -1,19 +1,19 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class MapCreatorTool here.
+ * Assists me in map creation
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version 1
  */
 public class MapCreatorTool extends World
 {
     int mode = 0;
+    int[][] worldGen = new int[24][12];
     /**
      * Constructor for objects of class MapCreatorTool.
-     * 
+     * Used for development purposes, not intended for actual gameplay.
      */
-    int[][] worldGen = new int[24][12];
     public MapCreatorTool()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
@@ -51,6 +51,9 @@ public class MapCreatorTool extends World
             printArray(worldGen);
         }
     }
+    /**
+     * Picks either a tile (1) or a simple enemy (2) or an advanced enemy (3)
+     */
     public void select()
     {
         if(Greenfoot.isKeyDown("1"))
@@ -66,22 +69,33 @@ public class MapCreatorTool extends World
             mode = 3;
         }
     }
+    /**
+     * Places a box
+     */
     public void placeBox(int x, int y)
     {
         VisualBox box = new VisualBox();
         addObject(box,x,y);
     }
+    /**
+     * Places an enemy
+     */
     public void placeEnemy(int x, int y)
     {
         VisualEnemy enemy = new VisualEnemy();
         addObject(enemy,x,y);
     }
+    /**
+     * Places an advanced enemy
+     */
     public void placeAdvancedEnemy(int x, int y)
     {
         VAEnemy aEnemy = new VAEnemy();
         addObject(aEnemy,x,y);
     }
-    
+    /**
+     * Prints out the 2d array of the new world created in terminal
+     */
     public void printArray(int[][] arr)
     {
         System.out.println("New world:");

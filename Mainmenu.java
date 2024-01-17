@@ -1,23 +1,24 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Mainmenu here.
+ * Main menu, should be the first thing loading in
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version 1
  */
 public class Mainmenu extends World
 {
-
+    GreenfootSound mm = new GreenfootSound("mm.wav");
     /**
      * Constructor for objects of class Mainmenu.
-     * 
+     * Main menu
      */
     public Mainmenu()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(1200, 600, 1); 
         prepare();
+        mm.playLoop();
     }
     /**
      * Prepare the world for the start of the program.

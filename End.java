@@ -1,17 +1,13 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class End here.
+ * The end goal of every level
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy 
+ * @version 2
  */
 public class End extends Actor
 {
-    /**
-     * Act - do whatever the End wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
-     */
     GreenfootImage[] star = new GreenfootImage[6];
     SimpleTimer animationTimer = new SimpleTimer();
     public End()
@@ -23,7 +19,9 @@ public class End extends Actor
             star[i].scale(50,50);
         }
     }
-    
+    /**
+     * Checks if the player is touching it, and then changes the Level
+     */
     public void act()
     {
         GameWorld world = (GameWorld) getWorld();

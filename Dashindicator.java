@@ -1,16 +1,15 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Dashindicator here.
+ * It's indicating the dash
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Andy
+ * @version 1
  */
 public class Dashindicator extends Actor
 {
     /**
-     * Act - do whatever the Dashindicator wants to do. This method is called whenever
-     * the 'Act' or 'Run' button gets pressed in the environment.
+     * Visually indicates the cooldown for the dash
      */
     GreenfootImage dashIndicator = new GreenfootImage("images/dash.png");
     public void act()
