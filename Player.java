@@ -119,7 +119,7 @@ public class Player extends SmoothMover
             bounding();
             if(!isGrounded)
             {
-                if(!Greenfoot.isKeyDown("up")&&!peakJump)
+                if((!Greenfoot.isKeyDown("up")||Greenfoot.isKeyDown("w"))&&!peakJump)
                 {
                     peakJump = true;
                     gravityModifier = 0;
